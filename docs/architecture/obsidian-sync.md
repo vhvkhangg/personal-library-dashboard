@@ -1,191 +1,156 @@
 # Obsidian Sync Architecture
 
 ```txt
-Folder PATH listing
-Volume serial number is D869-FCDD
-C:\USERS\VU KHANG\ONEDRIVE\IDEAVERSE
-|   Backend RAG Learning Notes.md
-|   Coding Style.md
-|   Common Patterns.md
-|   E T E R N I T Y.md
-|   GUIDE.md
-|   Hooks System.md
-|   Java Build Resolver.md
-|   Java Coding Standards.md
-|   Java Reviewer.md
-|   JPA Patterns.md
-|   Security Guidelines.md
-|   Sorting_Specification.md
-|   TEST.md
-|   Testing Requirements.md
-|   YΩu c?u c?a t⌠i.md
-|   
-+---.obsidian
-|   |   app.json
-|   |   appearance.json
-|   |   bookmarks.json
-|   |   community-plugins.json
-|   |   core-plugins-migration.json
-|   |   core-plugins.json
-|   |   graph.json
-|   |   workspace-iKhangg.json
-|   |   workspace.json
-|   |   
-|   +---plugins
-|   |   +---custom-sort
-|   |   |       data.json
-|   |   |       main.js
-|   |   |       manifest.json
-|   |   |       
-|   |   +---obsidian-minimal-settings
-|   |   |       data.json
-|   |   |       main.js
-|   |   |       manifest.json
-|   |   |       
-|   |   +---table-editor-obsidian
-|   |   |       data.json
-|   |   |       main.js
-|   |   |       manifest.json
-|   |   |       styles.css
-|   |   |       
-|   |   \---waypoint
-|   |           main.js
-|   |           manifest.json
-|   |           styles.css
-|   |           
-|   +---snippets
-|   |       custom_font.css
-|   |       
-|   \---themes
-|       \---Minimal
-|               manifest.json
-|               theme.css
-|               
-\---CORE
-    |   CORE.md
-    |   
-    +---C⌠ng Phßp
-    |   +---Luy?n H?n
-    |   +---Luy?n Khφ
-    |   \---Luy?n Th?
-    +---C?nh Gi?i
-    +---C?t Truy?n
-    +---K? Nang
-    |       ?? H? TH?NG K? NANG.md
-    |       
-    +---Lπnh ╨?a
-    |   |   So ╨? Lπnh ╨?a.canvas
-    |   |   ?? L├NH ╨?A.md
-    |   |   
-    |   +---Anh H∙ng
-    |   |       ????? Shalltear Bloodfallen.md
-    |   |       
-    |   +---C⌠ng Tr∞nh Ki?n Tr·c
-    |   |   +---B?n M?nh
-    |   |   |       ?? Linh Ch? Chi TΓm.md
-    |   |   |       
-    |   |   +---Chi?n Tranh
-    |   |   +---H?ch TΓm
-    |   |   +---S?n Xu?t
-    |   |   +---Thßp Ph≥ng V?
-    |   |   \---Tu?ng Thαnh
-    |   +---QuΓn ╨?i
-    |   |   \---QuΓn ╨oαn
-    |   \---?? Qu?n L²
-    |       |   ?? H? TH?NG QU?N L▌.md
-    |       |   
-    |       +---M?t Tr?n T? Qu?c
-    |       +---Qu?c H?i
-    |       |   +---Chφnh Ph?
-    |       |   |   |   H? TH?NG CH═NH PH?.md
-    |       |   |   |   
-    |       |   |   +---Cßc B? ChuyΩn Trßch
-    |       |   |   \---Co Quan (Ngang B?)
-    |       |   |       \---??? Ph? T?ng Qu?n N?i Cßc
-    |       |   |               ??? H? TH?NG PH? T?NG QU?N N?I C┴C.md
-    |       |   |               
-    |       |   \---Nhα Nu?c
-    |       \---╨?ng
-    +---NhΓn V?t Chφnh
-    |   |   Linh Can.md
-    |   |   Linh Tu?ng.md
-    |   |   NH┬N V?T CH═NH.md
-    |   |   Th? Ch?t.md
-    |   |   
-    |   +---Ch?ng T?c
-    |   |       Ch?ng T?c1.md
-    |   |       
-    |   +---C⌠ng Phßp
-    |   |       H⌠ H?p Phßp.md
-    |   |       Luy?n H?n Phßp.md
-    |   |       Luy?n Khφ Phßp.md
-    |   |       Luy?n Th? Phßp.md
-    |   |       
-    |   +---Huy?t M?ch
-    |   |       Huy?t M?ch1.md
-    |   |       
-    |   +---Ki?n Th?c
-    |   +---K? Nang
-    |   |   |   B?n M?nh.md
-    |   |   |   ?? H? TH?NG K? NANG.md
-    |   |   |   
-    |   |   \---H?ch TΓm
-    |   |           NguyΩn Hoß V?n Phßp.md
-    |   |           V?n Tu?ng NguyΩn H?ch.md
-    |   |           
-    |   +---Ngh? Nghi?p
-    |   |   +---B?n M?nh
-    |   |   |       V?n Tu?ng Gi?.md
-    |   |   |       
-    |   |   \---H?ch TΓm
-    |   |           Hu? Di?t Gi?.md
-    |   |           M?nh V?n Gi?.md
-    |   |           Ph≥ng V? Gi?.md
-    |   |           Sßng T?o Gi?.md
-    |   |           Tai Uong Gi?.md
-    |   |           Thßnh TΓm Gi?.md
-    |   |           Th⌠ng Tu? Gi?.md
-    |   |           Th?ng Ng? Gi?.md
-    |   |           ╨?u Tuy?t Gi?.md
-    |   |           
-    |   +---ThiΩn Ph·
-    |   |       B?n M?nh.md
-    |   |       H?ch TΓm.md
-    |   |       
-    |   \---Trang B?
-    |           V?n Tu?ng L?p Phuong.md
-    |           
-    +---Ph?n Di?n
-    |   \---Qußi V?t
-    +---Templates
-    +---Th? Gi?i Quan & Th? L?c
-    +---Th? Ch?t
-    +---Vu Khφ Trang B?
-    |   +---Trang B?
-    |   \---Vu Khφ
-    +---V?t Ph?m
-    |   \---Quy?n Tr?c
-    +---?? S?ng Th·
-    |       ?? H? TH?NG S?NG TH┌.md
-    |       
-    \---?? Thi?t L?p
-        |   ?? H? TH?NG THI?T L?P.md
-        |   
-        \---Thu?c Tφnh
-            +---Thu?ng
-            |       ?? KhΘo LΘo.md
-            |       ?? Nhanh Nh?n.md
-            |       ?? S?c M?nh.md
-            |       ?? Trφ Tu?.md
-            |       ?? Th? Ch?t.md
-            |       ?? Tinh Th?n.md
-            |       
-            +---╨?c Bi?t
-            |       ?? V?n Khφ.md
-            |       ?? Th?ng Soßi.md
-            |       
-            \---?n
-
+C:\Users\VU KHANG\OneDrive\IDEAVERSE
+\-- .obsidian
+|   \-- plugins
+|   |   \-- custom-sort
+|   |   |   \-- data.json
+|   |   |   \-- main.js
+|   |   |   +-- manifest.json
+|   |   \-- obsidian-minimal-settings
+|   |   |   \-- data.json
+|   |   |   \-- main.js
+|   |   |   +-- manifest.json
+|   |   \-- table-editor-obsidian
+|   |   |   \-- data.json
+|   |   |   \-- main.js
+|   |   |   \-- manifest.json
+|   |   |   +-- styles.css
+|   |   +-- waypoint
+|   |       \-- main.js
+|   |       \-- manifest.json
+|   |       +-- styles.css
+|   \-- snippets
+|   |   +-- custom_font.css
+|   \-- themes
+|   |   +-- Minimal
+|   |       \-- manifest.json
+|   |       +-- theme.css
+|   \-- app.json
+|   \-- appearance.json
+|   \-- bookmarks.json
+|   \-- community-plugins.json
+|   \-- core-plugins.json
+|   \-- core-plugins-migration.json
+|   +-- graph.json
+\-- CORE
+|   \-- Cảnh Giới
+|   \-- Công Pháp
+|   |   \-- Luyện Hồn
+|   |   \-- Luyện Khí
+|   |   +-- Luyện Thể
+|   \-- Cốt Truyện
+|   \-- Kỹ Năng
+|   |   +-- ⚛️ HỆ THỐNG KỸ NĂNG.md
+|   \-- Lãnh Địa
+|   |   \-- ⚙️ Quản Lý
+|   |   |   \-- Đảng
+|   |   |   \-- Mặt Trận Tổ Quốc
+|   |   |   \-- Quốc Hội
+|   |   |   |   \-- Chính Phủ
+|   |   |   |   |   \-- Các Bộ Chuyên Trách
+|   |   |   |   |   \-- Cơ Quan (Ngang Bộ)
+|   |   |   |   |   |   +-- 🏛️ Phủ Tổng Quản Nội Các
+|   |   |   |   |   |       +-- 🏛️ HỆ THỐNG PHỦ TỔNG QUẢN NỘI CÁC.md
+|   |   |   |   |   +-- HỆ THỐNG CHÍNH PHỦ.md
+|   |   |   |   +-- Nhà Nước
+|   |   |   +-- ⚙️ HỆ THỐNG QUẢN LÝ.md
+|   |   \-- Anh Hùng
+|   |   |   +-- 🧛‍♀️ Shalltear Bloodfallen.md
+|   |   \-- Công Trình Kiến Trúc
+|   |   |   \-- Bản Mệnh
+|   |   |   |   +-- 💠 Lĩnh Chủ Chi Tâm.md
+|   |   |   \-- Chiến Tranh
+|   |   |   \-- Hạch Tâm
+|   |   |   \-- Sản Xuất
+|   |   |   \-- Tháp Phòng Vệ
+|   |   |   +-- Tường Thành
+|   |   \-- Quân Đội
+|   |   |   +-- Quân Đoàn
+|   |   \-- Sơ Đồ Lãnh Địa.canvas
+|   |   +-- 🏰 LÃNH ĐỊA.md
+|   \-- Nhân Vật Chính
+|   |   \-- Chủng Tộc
+|   |   |   +-- Chủng Tộc1.md
+|   |   \-- Công Pháp
+|   |   |   \-- Hô Hấp Pháp.md
+|   |   |   \-- Luyện Hồn Pháp.md
+|   |   |   \-- Luyện Khí Pháp.md
+|   |   |   +-- Luyện Thể Pháp.md
+|   |   \-- Huyết Mạch
+|   |   |   +-- Huyết Mạch1.md
+|   |   \-- Kiến Thức
+|   |   \-- Kỹ Năng
+|   |   |   \-- Hạch Tâm
+|   |   |   |   \-- Nguyên Hoá Vạn Pháp.md
+|   |   |   |   +-- Vạn Tượng Nguyên Hạch.md
+|   |   |   \-- ⚛️ HỆ THỐNG KỸ NĂNG.md
+|   |   |   +-- Bản Mệnh.md
+|   |   \-- Nghề Nghiệp
+|   |   |   \-- Bản Mệnh
+|   |   |   |   +-- Vạn Tượng Giả.md
+|   |   |   +-- Hạch Tâm
+|   |   |       \-- Đấu Tuyệt Giả.md
+|   |   |       \-- Huỷ Diệt Giả.md
+|   |   |       \-- Mệnh Vận Giả.md
+|   |   |       \-- Phòng Vệ Giả.md
+|   |   |       \-- Sáng Tạo Giả.md
+|   |   |       \-- Tai Ương Giả.md
+|   |   |       \-- Thánh Tâm Giả.md
+|   |   |       \-- Thống Ngự Giả.md
+|   |   |       +-- Thông Tuệ Giả.md
+|   |   \-- Thiên Phú
+|   |   |   \-- Bản Mệnh.md
+|   |   |   +-- Hạch Tâm.md
+|   |   \-- Trang Bị
+|   |   |   +-- Vạn Tượng Lập Phương.md
+|   |   \-- Linh Căn.md
+|   |   \-- Linh Tướng.md
+|   |   \-- NHÂN VẬT CHÍNH.md
+|   |   +-- Thể Chất.md
+|   \-- Phản Diện
+|   |   +-- Quái Vật
+|   \-- Templates
+|   \-- Thể Chất
+|   \-- Thế Giới Quan & Thế Lực
+|   \-- Vật Phẩm
+|   |   +-- Quyển Trục
+|   \-- Vũ Khí Trang Bị
+|   |   \-- Trang Bị
+|   |   +-- Vũ Khí
+|   \-- 🐾 Sủng Thú
+|   |   +-- 🐾 HỆ THỐNG SỦNG THÚ.md
+|   \-- 📚 Thiết Lập
+|   |   \-- Thuộc Tính
+|   |   |   \-- Ẩn
+|   |   |   \-- Đặc Biệt
+|   |   |   |   \-- 🍀 Vận Khí.md
+|   |   |   |   +-- 👑 Thống Soái.md
+|   |   |   +-- Thường
+|   |   |       \-- 🏹 Khéo Léo.md
+|   |   |       \-- 💨 Nhanh Nhẹn.md
+|   |   |       \-- 🔴 Sức Mạnh.md
+|   |   |       \-- 🔵 Trí Tuệ.md
+|   |   |       \-- 🟢 Thể Chất.md
+|   |   |       +-- 🧠 Tinh Thần.md
+|   |   +-- 📚 HỆ THỐNG THIẾT LẬP.md
+|   +-- CORE.md
+\-- Backend RAG Learning Notes.md
+\-- Coding Style.md
+\-- Common Patterns.md
+\-- E T E R N I T Y.md
+\-- GUIDE.md
+\-- Hooks System.md
+\-- Java Build Resolver.md
+\-- Java Coding Standards.md
+\-- Java Reviewer.md
+\-- JPA Patterns.md
+\-- Security Guidelines.md
+\-- Sorting_Specification.md
+\-- TEST.md
+\-- Testing Requirements.md
++-- Yêu cầu của tôi.md
 ```
 ## Decision
 
