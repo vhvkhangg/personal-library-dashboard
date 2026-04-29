@@ -21,7 +21,7 @@ Expected access pattern:
 - Desktop Windows 11 machine acts as the primary host/server.
 - Laptop Windows 11 machine accesses the app through browser over LAN or private VPN.
 - Docker Desktop is the default local runtime.
-- PostgreSQL is single-source-of-truth for application metadata.
+- PostgreSQL is single source of truth for application metadata.
 - Large media files stay on local filesystem.
 - Image/music cloud storage targets Google Drive through a storage abstraction.
 - Obsidian vault stays outside the repository and remains the source of truth for Ideaverse Markdown notes.
@@ -44,6 +44,7 @@ Use these defaults unless the user explicitly changes them.
 - Language: Java 25.
 - Framework: Spring Boot 4.0.6.
 - Build tool: Maven.
+- Base package: `com.vhvkhangg.personallibrarydashboard`.
 - Architecture: Modular Monolith.
 - API style: REST-first.
 - Auth: single-user JWT learning implementation.
@@ -54,6 +55,7 @@ Use these defaults unless the user explicitly changes them.
 
 - Language: Python.
 - Package/tooling: uv.
+- Python package: `pld_rag`.
 - Runtime role: local ingestion, OCR, parsing, chunking, embeddings, retrieval, reranking, and local LLM answer generation.
 - Privacy: offline-first; do not send private documents to external APIs by default.
 - Vietnamese support is a first-class requirement.
@@ -81,6 +83,12 @@ Target layout:
 personal-library-dashboard/
   AGENTS.md
   README.md
+  .gitignore
+  .env.example
+  compose.yaml
+  pnpm-workspace.yaml
+  package.json
+  turbo.json
 
   apps/
     web/                    # Next.js 16 frontend
@@ -277,7 +285,8 @@ Implement in this order unless the user changes priorities:
    - PDF/DOCX/TXT/MD/CSV/XLSX parsing.
    - Table extraction.
    - Embeddings.
-   - Retrieval.
+   - Hybrid retrieval.
+   - CrossEncoder reranking.
    - Local LLM answering.
 
 ## 6. Architecture Rules
@@ -459,7 +468,7 @@ Never hardcode absolute local paths. Use environment variables, for example:
 
 ```txt
 MEDIA_LOCAL_ROOT=D:/PersonalLibrary/media
-OBSIDIAN_VAULT_PATH=D:/Obsidian/Ideaverse
+OBSIDIAN_VAULT_PATH=C:/Users/VU KHANG/OneDrive/IDEAVERSE
 ```
 
 ## 9. Obsidian / Ideaverse Rules
@@ -467,6 +476,12 @@ OBSIDIAN_VAULT_PATH=D:/Obsidian/Ideaverse
 The Obsidian vault is outside the app repo.
 
 The vault is the source of truth for Ideaverse content.
+
+Current external vault path:
+
+```txt
+C:/Users/VU KHANG/OneDrive/IDEAVERSE
+```
 
 Database role:
 
@@ -520,6 +535,13 @@ Sync policy:
 - On conflict, do not silently overwrite.
 - Prefer preserving Markdown formatting.
 - Never mass-rewrite the vault without explicit user approval.
+
+Index policy:
+
+- Index `*.md` by default.
+- Ignore `.obsidian/**`.
+- Ignore plugin/theme/snippet folders.
+- Handle `*.canvas` later as metadata.
 
 ## 10. RAG/OCR Rules
 
@@ -762,8 +784,9 @@ When using Codex:
 - Use `.agents/skills` when relevant.
 - Use `docs-researcher` when framework behavior may have changed.
 
-Do not overuse custom subagents. Current recommended agents:
+Do not overuse custom subagents.
 
+Current recommended agents:
 - explorer
 - reviewer
 - docs-researcher
