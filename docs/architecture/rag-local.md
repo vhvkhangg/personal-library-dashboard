@@ -103,14 +103,22 @@ Do not mix embeddings from different models without versioning.
 
 ## OCR Recommendation
 
-Start with local OCR.
+Use local OCR.
 
-Candidate stack:
+Default OCR stack:
 
-- Tesseract with Vietnamese language data for simple OCR
-- Docling for document parsing, tables, reading order, and PDF-to-structured-content flows
+```txt
+Document structure/layout/table parsing:
+- Docling or equivalent parser
 
-Evaluate on a small Vietnamese document set before calling it accurate.
+Primary OCR:
+- PaddleOCR
+
+Fallback OCR:
+- Tesseract with Vietnamese language data
+
+Optional experiment:
+- VietOCR or PaddleOCR + VietOCR hybrid
 
 ## Pipeline
 
@@ -141,6 +149,50 @@ Generate answer with local LLM
   ↓
 Return answer + source chunks
 ```
+
+```md id="yb3oza"
+## Hybrid Retrieval and Reranking
+
+RAG must use hybrid retrieval plus reranking.
+
+Pipeline:
+
+```txt
+Query
+  ↓
+Normalize query
+  ↓
+Sparse retrieval
+  +
+Dense vector retrieval
+  ↓
+Candidate fusion
+  ↓
+CrossEncoder reranking
+  ↓
+Top-K context selection
+  ↓
+Local LLM answer generation
+  ↓
+Answer with source chunks
+```
+
+Dense embedding:
+- BGE-M3
+
+Sparse retrieval:
+- PostgreSQL full-text search first
+- BM25-style retrieval later if needed
+
+Fusion:
+- Reciprocal Rank Fusion or weighted score merge
+
+CrossEncoder reranker:
+- BAAI/bge-reranker-v2-m3
+
+Answer model:
+- Qwen3 8B quantized by default
+- Qwen3 14B quantized quality mode if desktop performance is acceptable
 
 ## Answer Rules
 

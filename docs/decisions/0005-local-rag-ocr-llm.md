@@ -10,7 +10,31 @@ The user wants local/offline RAG with Vietnamese support, OCR, and parsing for P
 
 ## Decision
 
-Use a Python local RAG/OCR service. Start with Qwen3 8B quantized as the default local LLM candidate, Qwen3 14B quantized as desktop quality mode if acceptable, and Vistral-7B-Chat as a Vietnamese-focused comparison model. Start embeddings with BGE-M3 or a Vietnamese BGE-M3 fine-tune after evaluation.
+Use a Python local RAG/OCR service.
+
+Default OCR/parsing stack:
+
+- Docling or equivalent tooling for document layout, tables, and structured parsing.
+- PaddleOCR as the primary OCR engine for scanned PDFs/images.
+- Tesseract Vietnamese as fallback/light baseline OCR.
+- VietOCR or PaddleOCR + VietOCR hybrid as an optional Vietnamese OCR experiment.
+
+Default retrieval stack:
+
+- BGE-M3 for dense embeddings.
+- PostgreSQL full-text search for sparse retrieval.
+- pgvector for dense retrieval.
+- Candidate fusion before reranking.
+- CrossEncoder reranking before answer generation.
+- BAAI/bge-reranker-v2-m3 as the default reranker candidate.
+
+Default local LLM strategy:
+
+- Qwen3 8B quantized as the default local answer model candidate.
+- Qwen3 14B quantized as desktop quality mode if performance is acceptable.
+- Vistral-7B-Chat as a Vietnamese-focused comparison model.
+
+Do not assume any model is permanently best. Build a small Vietnamese evaluation set and compare OCR quality, retrieval quality, reranking quality, and final answer quality.
 
 ## Alternatives Considered
 

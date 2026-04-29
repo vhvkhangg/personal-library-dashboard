@@ -540,10 +540,23 @@ Default embedding strategy:
 
 OCR strategy:
 
-- Start local.
-- Use Tesseract Vietnamese support for simple OCR.
-- Use Docling or similar document parsing tooling for PDFs/tables/reading order where suitable.
+- Primary OCR engine: PaddleOCR.
+- Fallback/light baseline OCR engine: Tesseract with Vietnamese language data.
+- Document layout/table parsing: Docling or equivalent document parsing tooling.
+- Optional Vietnamese OCR experiment: VietOCR or PaddleOCR + VietOCR hybrid if evaluation proves better.
 - Evaluate OCR quality on Vietnamese documents before relying on it.
+
+Retrieval and reranking strategy:
+
+- Retrieval must not stop at vector search.
+- Use hybrid retrieval:
+  - sparse retrieval from PostgreSQL full-text search or BM25-style candidate retrieval
+  - dense retrieval from pgvector embeddings
+  - candidate fusion using Reciprocal Rank Fusion or weighted merge
+- Add a CrossEncoder reranking stage.
+- Default reranker model candidate: BAAI/bge-reranker-v2-m3.
+- Rerank top candidates before sending context to the local LLM.
+- Store retrieval and reranking metadata for debugging and evaluation.
 
 RAG ingestion must separate:
 
@@ -554,8 +567,10 @@ RAG ingestion must separate:
 - chunking
 - embedding
 - indexing
-- retrieval
-- reranking
+- sparse retrieval
+- dense retrieval
+- hybrid fusion
+- cross-encoder reranking
 - answer generation
 - citation/source display
 
@@ -563,7 +578,7 @@ RAG answers must:
 
 - cite source documents/chunks internally in the UI
 - prefer saying "không đủ dữ liệu" over hallucinating
-- expose the retrieved chunks for debugging when possible
+- expose the retrieved chunks and reranking scores for debugging when possible
 - support Vietnamese queries and Vietnamese answers
 
 ## 11. Authentication and Security Rules
