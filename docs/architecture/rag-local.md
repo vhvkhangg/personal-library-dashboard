@@ -15,8 +15,10 @@ The Python RAG service handles:
 - chunking
 - embedding
 - vector indexing
-- retrieval
-- reranking
+- sparse retrieval
+- dense retrieval
+- hybrid retrieval
+- cross-encoder reranking
 - local LLM answer generation
 
 The Spring API handles:
@@ -57,7 +59,7 @@ Qwen3 8B quantized
 Reason:
 
 - good multilingual baseline
-- should be more realistic on 8GB VRAM + 16GB RAM than larger models
+- more realistic on 8GB VRAM + 16GB RAM than larger models
 - enough for local RAG answering and Vietnamese Q&A trials
 
 Quality mode on desktop:
@@ -119,38 +121,12 @@ Fallback OCR:
 
 Optional experiment:
 - VietOCR or PaddleOCR + VietOCR hybrid
-
-## Pipeline
-
-```txt
-Document discovered/uploaded
-  ↓
-Metadata record created
-  ↓
-Parse text and structure
-  ↓
-OCR if required
-  ↓
-Normalize text
-  ↓
-Extract tables
-  ↓
-Chunk with heading/page metadata
-  ↓
-Embed chunks
-  ↓
-Store vectors in pgvector
-  ↓
-Retrieve by query
-  ↓
-Optional rerank
-  ↓
-Generate answer with local LLM
-  ↓
-Return answer + source chunks
 ```
 
-```md id="yb3oza"
+PaddleOCR should be the first serious OCR engine for scanned PDFs and images. Tesseract remains useful as a simple fallback or baseline.
+
+Evaluate OCR with Vietnamese documents before calling the pipeline production-ready.
+
 ## Hybrid Retrieval and Reranking
 
 RAG must use hybrid retrieval plus reranking.
@@ -177,6 +153,9 @@ Local LLM answer generation
 Answer with source chunks
 ```
 
+Default components:
+
+```txt
 Dense embedding:
 - BGE-M3
 
@@ -193,6 +172,48 @@ CrossEncoder reranker:
 Answer model:
 - Qwen3 8B quantized by default
 - Qwen3 14B quantized quality mode if desktop performance is acceptable
+```
+
+Store debug metadata:
+
+- sparse score
+- dense score
+- fused rank
+- reranker score
+- selected context chunks
+- answer source citations
+
+## Pipeline
+
+```txt
+Document discovered/uploaded
+  ↓
+Metadata record created
+  ↓
+Parse text and structure
+  ↓
+OCR if required
+  ↓
+Normalize text
+  ↓
+Extract tables
+  ↓
+Chunk with heading/page metadata
+  ↓
+Embed chunks
+  ↓
+Store vectors in pgvector
+  ↓
+Sparse retrieval + dense retrieval
+  ↓
+Candidate fusion
+  ↓
+CrossEncoder reranking
+  ↓
+Generate answer with local LLM
+  ↓
+Return answer + source chunks
+```
 
 ## Answer Rules
 
@@ -202,7 +223,7 @@ Answer behavior:
 
 - cite source chunks in UI
 - say when there is not enough evidence
-- show retrieved snippets when debugging
+- show retrieved snippets and reranking scores when debugging
 - avoid inventing facts
 - support Vietnamese queries
 - answer in Vietnamese by default when user asks in Vietnamese
@@ -223,5 +244,8 @@ Use it when changing:
 - OCR backend
 - embedding model
 - chunk size
+- sparse retrieval
+- dense retrieval
+- fusion method
 - reranker
 - answer model

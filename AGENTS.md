@@ -301,7 +301,7 @@ Rules:
 Suggested Java package structure:
 
 ```txt
-com.personal.librarydashboard
+com.vhvkhangg.personallibrarydashboard
   common/
     error/
     validation/
