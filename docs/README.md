@@ -1,27 +1,37 @@
-# Documentation Index
+# personal-library-dashboard Docs
 
-This directory contains architecture notes and decision records for `personal-library-dashboard`.
+This documentation set is the Phase 1 final version. It replaces the older incremental Phase 1 patch notes and keeps only durable project information.
 
-## Architecture
+## Read order
 
-- [Overview](architecture/overview.md)
-- [Repository Layout](architecture/repository-layout.md)
-- [Modules](architecture/modules.md)
-- [UI Guidelines](architecture/ui-guidelines.md)
-- [Data Model](architecture/data-model.md)
-- [Storage](architecture/storage.md)
-- [Obsidian Sync](architecture/obsidian-sync.md)
-- [Local RAG/OCR](architecture/rag-local.md)
-- [Security/Auth](architecture/security-auth.md)
-- [Testing and Verification](architecture/testing-and-verification.md)
+1. `architecture/00-overview.md`
+2. `architecture/01-repository-layout.md`
+3. `architecture/02-frontend-ui.md`
+4. `architecture/03-modules.md`
+5. `architecture/04-backend-modular-monolith.md`
+6. `architecture/05-data-model.md`
+7. `architecture/06-storage.md`
+8. `architecture/07-auth-security.md`
+9. `architecture/08-ideaverse-obsidian.md`
+10. `architecture/09-rag-ocr.md`
+11. `architecture/10-export.md`
+12. `architecture/11-testing-verification.md`
+13. `development/phase-1-final.md`
+14. `development/phase-2-plan.md`
+15. `development/local-commands.md`
 
-## Architecture Decision Records
+## Folder policy
 
-- [0001 — Deployment: Docker Desktop on Windows desktop host](decisions/0001-deployment-docker-desktop-windows.md)
-- [0002 — Auth: single-user JWT](decisions/0002-auth-jwt-single-user.md)
-- [0003 — Storage: local large media + Google Drive-capable abstraction](decisions/0003-storage-local-plus-google-drive.md)
-- [0004 — Obsidian vault as Ideaverse source of truth](decisions/0004-obsidian-vault-source-of-truth.md)
-- [0005 — Offline local RAG/OCR/LLM](decisions/0005-local-rag-ocr-llm.md)
-- [0006 — Hybrid relational + JSONB data model](decisions/0006-hybrid-relational-jsonb-tags.md)
-- [0007 — Dashboard/list UI style](decisions/0007-dashboard-table-ui-style.md)
-- [0008 — MVP implementation order](decisions/0008-mvp-order.md)
+```txt
+docs/
+  README.md
+  architecture/     Durable architecture docs.
+  decisions/        Consolidated ADRs only.
+  development/      Current phase summaries, local commands, and phase plans.
+```
+
+Older files such as `UI_PHASE1_*`, patch-specific notes, and one-off hotfix docs are intentionally consolidated into the current architecture docs and three ADRs.
+
+## Current phase status
+
+Phase 1 UI is accepted. The next implementation phase should be Phase 2 authentication, after this docs/services cleanup is applied and committed.

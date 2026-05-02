@@ -1,0 +1,93 @@
+name: personal-library-dashboard
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: pld-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-personal_library_dashboard}
+      POSTGRES_USER: ${POSTGRES_USER:-pld}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pld_dev_password}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pld-postgres-data:/var/lib/postgresql/data
+      - ./infrastructure/docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-pld} -d ${POSTGRES_DB:-personal_library_dashboard}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: pld-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - pld-ollama-data:/root/.ollama
+    profiles:
+      - rag-local-llm
+
+  api:
+    build:
+      context: ./services/api
+    container_name: pld-api
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-personal_library_dashboard}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-pld}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-pld_dev_password}
+      RAG_SERVICE_BASE_URL: http://rag:8000
+      MEDIA_LOCAL_ROOT: /data/media
+      OBSIDIAN_VAULT_PATH: /data/obsidian-vault
+    ports:
+      - "${API_PORT:-8080}:8080"
+    volumes:
+      - ${MEDIA_LOCAL_ROOT:-D:/PersonalLibrary/media}:/data/media
+      - ${OBSIDIAN_VAULT_PATH:-C:/Users/VU KHANG/OneDrive/IDEAVERSE}:/data/obsidian-vault
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rag:
+        condition: service_started
+    profiles:
+      - full
+
+  rag:
+    build:
+      context: ./services/rag
+    container_name: pld-rag
+    restart: unless-stopped
+    environment:
+      RAG_SERVICE_PORT: 8000
+      OLLAMA_BASE_URL: http://ollama:11434
+      RAG_DEFAULT_LLM_MODEL: ${RAG_DEFAULT_LLM_MODEL:-qwen3:8b}
+      RAG_QUALITY_LLM_MODEL: ${RAG_QUALITY_LLM_MODEL:-qwen3:14b}
+    ports:
+      - "${RAG_SERVICE_PORT:-8000}:8000"
+    profiles:
+      - full
+      - rag
+
+  web:
+    build:
+      context: ./apps/web
+    container_name: pld-web
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:${API_PORT:-8080}
+    ports:
+      - "3000:3000"
+    depends_on:
+      api:
+        condition: service_started
+    profiles:
+      - full
+
+volumes:
+  pld-postgres-data:
+  pld-ollama-data:

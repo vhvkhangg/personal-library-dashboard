@@ -14,7 +14,13 @@ This project is also a learning project for:
 
 ## Status
 
-Planning/documentation first. Implementation starts after architecture docs and ADRs are accepted.
+Phase 1 UI is accepted.
+
+Current cleanup:
+
+- final docs/services refactor,
+- root README/AGENTS refresh,
+- then Phase 2 starts with Authentication.
 
 ## Target Runtime
 
@@ -33,12 +39,28 @@ Windows 11 desktop host
 
 Laptop accesses the desktop host through browser over LAN or private VPN.
 
+## Current Product Decisions
+
+- Ideaverse is read-only in the web app.
+- The external Obsidian vault remains the source of truth and editing surface for Ideaverse Markdown.
+- Media includes a first-class Album module.
+- Albums can group Image, Picture, and Illustration items.
+- Song is not a visible Media submodule; song-like content belongs under Music.
+
 ## Major Modules
 
 - Dashboard
 - Fiction
 - Film
 - Media
+  - Album
+  - Image
+  - Picture
+  - Illustration
+  - Illustrator
+  - Video
+  - Music
+  - Musician
 - F&B
 - Information
 - NSFW
@@ -51,28 +73,33 @@ Laptop accesses the desktop host through browser over LAN or private VPN.
 
 Start here:
 
-- [Architecture Overview](docs/architecture/overview.md)
-- [Module Map](docs/architecture/modules.md)
-- [Repository Layout](docs/architecture/repository-layout.md)
-- [UI Guidelines](docs/architecture/ui-guidelines.md)
-- [Data Model](docs/architecture/data-model.md)
-- [Storage Architecture](docs/architecture/storage.md)
-- [Obsidian Sync](docs/architecture/obsidian-sync.md)
-- [Local RAG/OCR](docs/architecture/rag-local.md)
-- [Security/Auth](docs/architecture/security-auth.md)
-- [Testing and Verification](docs/architecture/testing-and-verification.md)
+- [Docs Index](docs/README.md)
+- [Architecture Overview](docs/architecture/00-overview.md)
+- [Repository Layout](docs/architecture/01-repository-layout.md)
+- [Frontend UI](docs/architecture/02-frontend-ui.md)
+- [Module Map](docs/architecture/03-modules.md)
+- [Backend Modular Monolith](docs/architecture/04-backend-modular-monolith.md)
+- [Data Model](docs/architecture/05-data-model.md)
+- [Storage Architecture](docs/architecture/06-storage.md)
+- [Security/Auth](docs/architecture/07-auth-security.md)
+- [Ideaverse and Obsidian](docs/architecture/08-ideaverse-obsidian.md)
+- [Local RAG/OCR](docs/architecture/09-rag-ocr.md)
+- [Export](docs/architecture/10-export.md)
+- [Testing and Verification](docs/architecture/11-testing-verification.md)
+- [Phase 1 Final State](docs/development/phase-1-final.md)
+- [Phase 2 Plan](docs/development/phase-2-plan.md)
 - [Architecture Decision Records](docs/decisions/)
 
-## Early MVP Order
+## Phase Roadmap
 
-1. Layout shell
-2. Auth
+1. Layout shell — accepted in Phase 1
+2. Auth — next Phase 2 target
 3. Tag system
-4. Image viewer
+4. Image and album viewer
 5. Fiction module
 6. Media storage
 7. Export CSV/Excel
-8. Obsidian sync
+8. Obsidian read/index/preview sync
 9. Video/music player
 10. RAG
 

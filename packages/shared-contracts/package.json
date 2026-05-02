@@ -1,0 +1,15 @@
+{
+  "name": "@pld/shared-contracts",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "echo \"No shared-contracts lint configured yet\"",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No shared-contracts tests configured yet\""
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}

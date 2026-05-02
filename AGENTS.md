@@ -4,6 +4,12 @@
 
 `personal-library-dashboard` is a private, single-user personal dashboard for storing, browsing, searching, viewing, and organizing the owner's favorite content.
 
+Current phase status:
+
+- Phase 1 UI is accepted.
+- Final Phase 1 docs/services cleanup is in progress.
+- Phase 2 should start with Authentication after the Phase 1 cleanup is committed.
+
 The project is also a learning project for:
 
 - Vibe coding with GPT web as the primary coding/planning assistant.
@@ -171,14 +177,20 @@ Submodules:
 Submodules:
 
 - Dashboard
+- Album
 - Image
-  - Picture
-  - Illustration
-  - Illustrator
+- Picture
+- Illustration
+- Illustrator
 - Video
 - Music
-  - Song
-  - Musician
+- Musician
+
+Notes:
+
+- Album is a first-class Media module.
+- An Album can group Image, Picture, and Illustration items.
+- Song is not a visible top-level submodule; song-like content belongs under Music.
 
 ### F&B
 
@@ -212,6 +224,12 @@ Submodules:
 ### Ideaverse
 
 Ideaverse is the owner's writing/worldbuilding area.
+
+Current UI decision:
+
+- Ideaverse is read-only in the web app.
+- The external Obsidian vault remains the editing surface and source of truth.
+- The web app should preview, index, and search Ideaverse Markdown, but should not edit or write Markdown files unless the user explicitly changes this decision.
 
 Submodules:
 
@@ -270,9 +288,10 @@ Implement in this order unless the user changes priorities:
    - Category export and filtered-list export.
 8. Obsidian sync:
    - External vault path configuration.
-   - Markdown read/write.
-   - Frontmatter convention.
+   - Markdown read/index/preview first.
+   - Frontmatter parsing.
    - Manual sync first.
+   - Do not implement web-based Markdown editing for Ideaverse unless the user explicitly re-enables it.
 9. Video/music player:
    - Browser-supported playback first.
    - Speed control.
@@ -325,6 +344,7 @@ com.vhvkhangg.personallibrarydashboard
   fiction/
   film/
   media/
+    album/
   fnb/
   information/
   nsfw/
@@ -493,17 +513,23 @@ Database role:
 Web role:
 
 - read Markdown
-- edit Markdown
-- write Markdown back to vault
-- parse/update frontmatter
-- provide preview
+- render Markdown preview
+- index file paths and frontmatter
+- cache searchable metadata
+- provide preview/navigation UI
 
-Preferred editor UX:
+Current non-role:
 
-- Markdown editor + preview split view.
-- The user writes normal Markdown.
-- Preview shows rendered Markdown.
-- WYSIWYG can be considered later.
+- Do not edit Markdown from the web UI.
+- Do not write Markdown back to the vault.
+- Do not implement a web Markdown editor for Ideaverse unless the user explicitly changes this decision.
+
+Preferred Ideaverse UX:
+
+- File tree + rendered Markdown preview.
+- Reading/progress indicator.
+- Search and metadata filters.
+- Obsidian remains the writing/editing tool.
 
 Frontmatter should be introduced gradually.
 
@@ -644,7 +670,8 @@ Secrets:
 
 Visual style:
 
-- Light dashboard by default.
+- Dark-first dashboard is the accepted Phase 1 look.
+- Light mode is supported and must stay readable.
 - Clean SaaS/admin dashboard.
 - Rounded containers.
 - Soft borders.
@@ -656,6 +683,9 @@ Visual style:
 - Column visibility control.
 - Export button.
 - Action menu with `...`.
+- Status dropdown in item tables.
+- Avatar preview modal when Avatar is available.
+- Delete confirmation for destructive actions.
 
 Main list pattern:
 
@@ -675,12 +705,12 @@ Toolbar:
 
 Content:
 - Table/list hybrid
-- Row icon/thumbnail
-- Title + description/note
-- Category/type
+- Row icon/thumbnail/avatar when applicable
+- Title + short description
+- Category/type/progress/module-specific field
 - Tags
 - Rating
-- Progress/status
+- Editable status dropdown
 - Created/updated date
 - Actions
 
@@ -878,6 +908,7 @@ Do not implement these until requested:
 - mobile app
 - full Google Drive bidirectional sync
 - automatic Obsidian vault watcher
+- web-based Ideaverse Markdown editing
 
 ## 19. When Requirements Are Missing
 
