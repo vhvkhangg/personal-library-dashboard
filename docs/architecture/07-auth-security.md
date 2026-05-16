@@ -2,7 +2,7 @@
 
 ## Phase 2 priority
 
-Authentication is the next major implementation phase after Phase 1 closeout.
+Authentication is the next implementation phase.
 
 ## Target auth
 
@@ -40,26 +40,10 @@ Accepted fields:
 
 ## Protected-zone PIN
 
-The header `H` button opens a PIN modal preview. Real enforcement should be backend-backed later.
+The header `H` button opens a PIN modal preview. Real enforcement is deferred.
 
 ## NSFW security
 
-NSFW content must eventually be filtered at backend API level.
+NSFW content must eventually be filtered by backend API level.
 
-Rules:
-
-- Search must not return NSFW content when NSFW mode is off.
-- NSFW module should require a separate PIN/password unlock.
-- Frontend hiding is not sufficient.
-
-## Secrets
-
-Never commit:
-
-- `.env`,
-- JWT secrets,
-- Google OAuth credentials,
-- database dumps,
-- private file paths,
-- model weights,
-- Obsidian vault content.
+Frontend hiding is not sufficient.

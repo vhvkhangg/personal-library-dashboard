@@ -1,87 +1,47 @@
-# Folder and File Guide
+# Folder Guide
 
-## Why `apps/web` instead of putting web files directly under `apps/`?
-
-`apps/` is an application workspace, not a single app folder. Keeping the Next.js app in `apps/web` leaves room for future apps without moving code later.
-
-Possible future siblings:
+## Root
 
 ```txt
-apps/
-  web/          Next.js browser UI
-  desktop/      optional future desktop shell
-  mobile/       optional future mobile app
-  admin/        optional future admin-only UI
+AGENTS.md       Project instructions for GPT/Codex-style agents.
+README.md       Human project overview.
+docs/           Durable documentation.
+apps/           Frontend and future app workspaces.
+services/       Backend/runtime services.
+packages/       Shared packages later.
+infrastructure/ Docker/scripts/local infra.
 ```
 
-For now, only `apps/web` exists. The extra folder is still useful because it keeps the monorepo shape clear.
+## `apps/web`
 
-## Why `services/api` and `services/rag`?
+Next.js 16 frontend.
 
-`services/` contains long-running backend processes or backend-adjacent runtimes.
+Why not put files directly under `apps/`?
 
-```txt
-services/
-  api/          Java Spring modular monolith; owns auth, metadata, tags, storage orchestration, exports
-  rag/          Python RAG/OCR runtime; owns parsing, OCR, embeddings, retrieval, reranking, generation
-```
+Because `apps/` is a workspace bucket. `web/` is the current browser app. This keeps room for future apps without moving files.
 
-Although the RAG service may expose HTTP endpoints, it is not the main business API. Calling it `rag` makes the responsibility clearer than `api2` or `python-api`.
+## `services/api`
 
-## Why not name the folder `backend/`?
+Java Spring business API. This is the source of business/auth/storage/tag/export APIs later.
 
-`backend/` is understandable, but it gets vague when there are multiple runtimes. `services/api` and `services/rag` make the boundaries explicit:
+## `services/rag`
 
-- Java API service: business backend.
-- Python RAG service: AI/document-processing backend.
+Python local RAG/OCR runtime. It may expose endpoints later, but it is not the main business API.
 
-This is a common monorepo style and remains readable after the project grows.
+## `docs`
 
-## Current tree target
+Durable docs. Avoid dumping patch notes here after Phase 1.
 
-```txt
-personal-library-dashboard/
-  apps/
-    web/
-      src/app/
-      src/components/
-      src/lib/
+## `skills`
 
-  services/
-    api/
-      src/main/java/com/vhvkhangg/personallibrarydashboard/
-      src/main/resources/
-    rag/
+Agent/Codex skills. Current skill set is enough for Phase 2 Auth. Add more skills only when a new specialized domain starts, such as:
 
-  packages/
-    shared-contracts/
+- Google Drive OAuth/integration,
+- ffmpeg/media processing,
+- Vietnamese OCR evaluation,
+- Obsidian indexing/sync,
+- pgvector retrieval evaluation.
 
-  infrastructure/
-    docker/
-    scripts/
+## `services` Phase 1 rule
 
-  docs/
-    RUNBOOK.md
-    README.md
-    architecture/
-    decisions/
-    development/
-
-  .agents/
-    skills/
-
-  .codex/
-```
-
-## Skill set status
-
-The current skills are enough for Phase 1 and Phase 2. They cover frontend design, frontend patterns, architecture decisions, coding standards, Spring Boot, security, database, Docker, testing, and RAG patterns.
-
-Do not collect more skills yet. Add skills only when a real gap appears, for example:
-
-- a specialized Google Drive integration skill,
-- a media transcoding/ffmpeg skill,
-- a Vietnamese OCR evaluation skill,
-- an Obsidian/frontmatter sync skill.
-
-Too many skills too early will make agent behavior noisier.
+The generated service tree is a skeleton only. Java packages contain `package-info.java` but no implementation classes.

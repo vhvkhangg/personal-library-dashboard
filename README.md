@@ -14,13 +14,15 @@ This project is also a learning project for:
 
 ## Status
 
-Phase 1 UI is accepted.
+Phase 1 UI is accepted as final.
 
-Current cleanup:
+Current sync:
 
-- final docs/services refactor,
-- root README/AGENTS refresh,
-- then Phase 2 starts with Authentication.
+- docs refreshed,
+- services skeleton refreshed,
+- root README/AGENTS refreshed,
+- skills refreshed,
+- Phase 2 starts with Authentication next.
 
 ## Target Runtime
 
@@ -43,9 +45,13 @@ Laptop accesses the desktop host through browser over LAN or private VPN.
 
 - Ideaverse is read-only in the web app.
 - The external Obsidian vault remains the source of truth and editing surface for Ideaverse Markdown.
-- Media includes a first-class Album module.
+- Media includes first-class Album and Account modules.
 - Albums can group Image, Picture, and Illustration items.
+- Account stores followed creator/social accounts and has a Viewer surface.
+- F&B includes Snack.
+- Header activity is called Journal / `Nhật ký`, not Notification.
 - Song is not a visible Media submodule; song-like content belongs under Music.
+- The removed liquid-glass effect should not be reintroduced.
 
 ## Major Modules
 
@@ -54,6 +60,7 @@ Laptop accesses the desktop host through browser over LAN or private VPN.
 - Film
 - Media
   - Album
+  - Account
   - Image
   - Picture
   - Illustration
@@ -62,10 +69,15 @@ Laptop accesses the desktop host through browser over LAN or private VPN.
   - Music
   - Musician
 - F&B
+  - Food
+  - Beverage
+  - Snack
 - Information
 - NSFW
 - Ideaverse
 - Documents/RAG
+- Profile
+- Settings
 - Export
 - Storage
 
@@ -92,7 +104,7 @@ Start here:
 
 ## Phase Roadmap
 
-1. Layout shell — accepted in Phase 1
+1. Layout shell and final UI — accepted in Phase 1
 2. Auth — next Phase 2 target
 3. Tag system
 4. Image and album viewer

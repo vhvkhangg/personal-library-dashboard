@@ -1,50 +1,50 @@
 # Phase 1 Final State
 
-## Accepted
+## Status
 
-Phase 1 UI is not final yet. The previous accepted state was reopened for Profile, Media Account, Snack, viewer tabs, RAG Workspace, dashboard chart layout, and liquid-glass polish.
+Phase 1 UI is accepted.
 
-## Final UI scope
+## Accepted UI scope
 
-Completed UI prototypes:
-
-- login page,
-- protected PIN modal from the `H` header control,
-- double-sidebar app shell,
-- module header/search shell,
-- global command palette preview,
-- dashboards,
-- module tables,
-- favorites tables,
-- tag panel and New Tag modal,
-- filters and date range controls,
-- status dropdown,
-- avatar preview,
-- item detail modal,
-- item edit modal,
-- delete confirmation modal,
-- column/export previews,
-- media/watch/viewer previews,
-- RAG Workspace,
+- Login page.
+- Protected PIN modal from header `H` control.
+- Header journal (`Nhật ký`) dialog with read/unread UI.
+- Global command palette with search preview.
+- Double sidebar shell.
+- Profile module.
+- Module dashboards.
+- Module Overview + Player/Reader/Viewer tabs.
+- Favorites and Items tables.
+- Tag panel and New Tag modal.
+- Search/filter/date controls.
+- Status dropdown.
+- Avatar preview.
+- Item detail modal.
+- Item edit modal.
+- Multi-attachment preview modal.
+- Delete confirmation modal.
+- Columns/export previews.
+- RAG Workspace.
 - Settings.
 
-## Important product decisions
+## Important final decisions
 
-- Ideaverse is read-only in the web UI.
-- Obsidian remains the editing/source-of-truth surface for Ideaverse.
-- Album is part of Media and can contain Image, Picture, and Illustration.
-- Song is not a visible module; Music owns song-like content.
-- RAG settings live in the RAG Workspace, not global Settings.
-- Status is edited from the table, not Edit Item.
-- Favorite is edited by the star, not Edit Item.
+- No liquid-glass effect.
+- Journal naming replaces notification naming.
+- Ideaverse is read-only on web.
+- Media has Album and Account.
+- F&B has Snack.
+- Song is not a visible module.
+- Status is edited from table rows.
+- Favorite is edited by star.
+- New/Edit Item does not include Visibility or Mark as favorite.
+- RAG-specific settings live in RAG Workspace, not global Settings.
 
-## Closeout checklist
+## Closeout
 
-Before starting Phase 2:
+After applying this final sync patch:
 
-1. Apply the final docs/services patch.
-2. Delete old duplicated docs if needed.
-3. Run frontend checks.
-4. Commit the accepted Phase 1 UI and docs state.
-5. Optionally tag the commit as `phase-1-ui-accepted`.
-6. Start Phase 2 Auth.
+1. Run frontend checks.
+2. Commit the accepted Phase 1 UI/docs/services state.
+3. Optionally tag the commit as `phase-1-ui-accepted`.
+4. Start Phase 2 Auth.

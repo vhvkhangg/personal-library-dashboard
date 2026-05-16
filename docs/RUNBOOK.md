@@ -1,39 +1,42 @@
-# RUNBOOK — Local Development
+# RUNBOOK
+
+## Goal
+
+Run and verify the project locally on Windows 11.
 
 ## Prerequisites
 
-- Windows 11.
-- Docker Desktop.
-- Java 25 for later backend phases.
-- Maven for later backend phases.
-- Node.js managed through Corepack/pnpm.
-- `pnpm` from repository root.
+- Windows 11
+- Docker Desktop
+- Node.js managed through Corepack/pnpm
+- Java 25 and Maven for later backend phases
+- Python tooling later for RAG (`uv`)
 
-## First-time setup
+## Frontend commands
+
+From repository root:
 
 ```powershell
 corepack enable
 pnpm install
-```
-
-## Frontend checks
-
-Run from repository root:
-
-```powershell
 pnpm --filter @pld/web typecheck
 pnpm --filter @pld/web lint
 pnpm --filter @pld/web dev
 ```
 
-If the Next/Turbopack cache gets noisy or stale:
+Clear Next.js cache if dev cache warnings appear:
 
 ```powershell
 Remove-Item -Recurse -Force apps\web\.next -ErrorAction SilentlyContinue
+```
+
+Then restart:
+
+```powershell
 pnpm --filter @pld/web dev
 ```
 
-## Docker database
+## Docker commands
 
 ```powershell
 docker compose up -d postgres
@@ -42,14 +45,34 @@ docker compose ps
 
 ## Backend status
 
-Phase 1 backend is still a package-map skeleton. `services/api` intentionally contains `package-info.java` placeholders and no real Spring runtime code yet.
+Phase 1 `services/api` is a package-map skeleton. It is not expected to contain real API classes yet.
 
-Phase 2 should start adding real backend code for Authentication.
+Phase 2 will add real Java code for Auth.
 
 ## RAG status
 
-`services/rag` is still a placeholder. RAG/OCR implementation starts after the earlier MVP foundations.
+Phase 1 `services/rag` is a placeholder. Real Python RAG/OCR implementation is deferred.
 
-## Current Phase 1 warning
+## Applying docs/services sync patches
 
-Phase 1 UI is still open while Profile, Media Account, Snack, RAG Workspace, chart layout, and viewer tabs are being adjusted. Do not tag Phase 1 as complete until the UI owner confirms it again.
+If a patch refreshes full `docs/`, `services/`, or `skills/`, apply it as a replacement:
+
+```powershell
+Remove-Item -Recurse -Force docs -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force services -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force skills -ErrorAction SilentlyContinue
+
+# Extract the patch into repository root.
+```
+
+If your repo stores skills under `.agents/skills` instead of root `skills/`, copy the generated `skills/` folder into `.agents/skills/` manually.
+
+## Phase 1 acceptance checklist
+
+- UI matches accepted Phase 1 screens.
+- No `liquid-surface` effect remains.
+- Journal button uses journal/history naming, not notification naming.
+- Profile, Media Account, Media Album, and F&B Snack are represented in docs/services.
+- Ideaverse remains read-only on web.
+- RAG Workspace matches the accepted left-rail/chat/inspector layout.
+- Root `README.md` and `AGENTS.md` match the final module map.

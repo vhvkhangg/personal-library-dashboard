@@ -49,7 +49,7 @@ function getPreviewTabLabel(title: string, variant: PreviewVariant) {
 
 function ModuleTabs({ activeTab, previewLabel, onChange }: { activeTab: "overview" | "preview"; previewLabel: string; onChange: (tab: "overview" | "preview") => void }) {
   return (
-    <div className="liquid-surface inline-flex rounded-2xl border border-[var(--border)] bg-[var(--card)] p-1">
+    <div className="inline-flex rounded-2xl border border-[var(--border)] bg-[var(--card)] p-1">
       {[["overview", "Overview"], ["preview", previewLabel]].map(([key, label]) => {
         const active = activeTab === key;
         return (

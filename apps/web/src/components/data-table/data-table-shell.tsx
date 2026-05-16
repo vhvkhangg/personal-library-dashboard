@@ -395,7 +395,7 @@ export function DataTableShell({ title, domainColumn = "Context", domainValue, t
 
   return (
     <>
-      <section className="liquid-surface overflow-visible rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
+      <section className="overflow-visible rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
         <div className="border-b border-[var(--border)] p-5">
           <div className="flex items-center justify-between gap-4">
             <h2 className="text-lg font-semibold">{title}</h2>

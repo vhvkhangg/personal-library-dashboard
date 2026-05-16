@@ -4,24 +4,16 @@
 
 Accepted
 
-## Context
-
-Phase 1 focused on finalizing the UI before backend implementation.
-
 ## Decisions
 
-- Keep the accepted dark-first dashboard visual language.
-- Use double sidebar navigation.
-- Keep command palette as UI-only preview.
-- Keep protected `H` PIN modal as UI-only preview.
-- Keep RAG Workspace as a three-column UI prototype.
-- Keep Settings as general app settings; RAG-specific controls stay inside RAG Workspace.
+- Phase 1 UI is accepted.
+- Dark-first dashboard style remains.
+- Liquid-glass effect is removed.
+- Header uses `Nhật ký` journal, not Notification.
+- Journal entries can be read/unread.
+- Profile is a top-level module.
+- Media includes Album and Account.
+- F&B includes Snack.
 - Ideaverse is read-only on web.
-- Media includes Album.
-- Song is not a visible module; Music owns song-like content.
-- Item detail uses Summary, Description, Note, and Facts.
-- Edit Item does not edit status or favorite.
-
-## Consequences
-
-Phase 2 can focus on auth/backend foundations without continuing large UI churn.
+- Viewer/Player/Reader content lives in a second tab inside modules.
+- RAG Workspace uses left rail + central chat + right inspector.

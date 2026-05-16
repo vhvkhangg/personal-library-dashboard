@@ -20,7 +20,7 @@ export default function ProfilePage() {
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {profileCards.map(([label, value, Icon]) => (
-          <div key={label} className="liquid-surface rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
+          <div key={label} className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-[var(--accent)]">
               <Icon className="h-5 w-5" />
             </div>
@@ -30,7 +30,7 @@ export default function ProfilePage() {
         ))}
       </section>
 
-      <section className="liquid-surface rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
+      <section className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
         <h2 className="text-lg font-semibold">Profile details</h2>
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">

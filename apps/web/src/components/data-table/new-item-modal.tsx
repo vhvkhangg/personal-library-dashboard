@@ -28,11 +28,60 @@ function TagSelector({ selectedTags, onChange, options = defaultTagOptions }: Ta
   );
 }
 
+function AttachmentPreviewModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  if (!open) return null;
+
+  const attachments = [
+    ["cover-preview.png", "Image · 2.4 MB"],
+    ["source-note.md", "Markdown · 8 KB"],
+    ["reference-scan.pdf", "PDF · 14 pages"],
+  ];
+
+  return (
+    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/65 p-4 backdrop-blur-sm" onClick={onClose}>
+      <div className="w-full max-w-lg rounded-3xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-2xl shadow-black/40" onClick={(event) => event.stopPropagation()}>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-sm font-medium text-[var(--muted)]">Attachment preview</p>
+            <h3 className="mt-1 text-2xl font-semibold">Upload preview or attachment</h3>
+          </div>
+          <button type="button" className="focus-ring rounded-xl p-2 text-[var(--muted)] hover:bg-[var(--interactive-hover-bg)] hover:text-[var(--interactive-hover-text)]" onClick={onClose}>
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        <div className="mt-5 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-6 text-center">
+          <Upload className="mx-auto h-5 w-5 text-[var(--muted)]" />
+          <p className="mt-3 text-sm font-semibold">Drop new files here</p>
+          <p className="mt-1 text-xs text-[var(--muted)]">One item can keep multiple attachments for preview, source files, and references.</p>
+        </div>
+
+        <div className="mt-5 space-y-3">
+          {attachments.map(([name, meta]) => (
+            <div key={name} className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3">
+              <div>
+                <p className="text-sm font-semibold">{name}</p>
+                <p className="mt-1 text-xs text-[var(--muted)]">{meta}</p>
+              </div>
+              <button type="button" className="focus-ring rounded-xl px-3 py-2 text-xs font-medium text-rose-400 hover:bg-rose-500 hover:text-white">Remove</button>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 flex justify-end gap-3">
+          <Button variant="outline" onClick={onClose}>Close</Button>
+          <Button onClick={onClose}>Use attachments</Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function NewItemModal({ open, onClose, moduleTitle }: NewItemModalProps) {
   const [type, setType] = React.useState("novel");
   const [status, setStatus] = React.useState("active");
-  const [visibility, setVisibility] = React.useState("private");
   const [selectedTags, setSelectedTags] = React.useState(["Tag", "Theme"]);
+  const [attachmentOpen, setAttachmentOpen] = React.useState(false);
   if (!open) return null;
 
   return (
@@ -61,15 +110,26 @@ export function NewItemModal({ open, onClose, moduleTitle }: NewItemModalProps) 
             </div>
             <div className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
               <TagSelector selectedTags={selectedTags} onChange={setSelectedTags} />
-              <Field label="Visibility"><SelectMenu value={visibility} onChange={setVisibility} options={[{ value: "private", label: "Private" }, { value: "protected", label: "Protected" }, { value: "public-later", label: "Public later" }]} /></Field>
-              <label className="flex items-center gap-3 rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm"><input type="checkbox" className="h-4 w-4" defaultChecked /><span>Mark as favorite</span></label>
-              <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] p-5 text-center"><Upload className="mx-auto h-5 w-5 text-[var(--muted)]" /><p className="mt-3 text-sm font-medium">Upload preview or attachment</p><p className="mt-1 text-xs text-[var(--muted)]">UI-only placeholder for future upload flow.</p></div>
+              <button type="button" className="focus-ring w-full rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] p-5 text-center transition hover:border-[var(--accent)] hover:bg-[var(--interactive-hover-bg)] hover:text-[var(--interactive-hover-text)]" onClick={() => setAttachmentOpen(true)}>
+                <Upload className="mx-auto h-5 w-5 text-[var(--muted)]" />
+                <p className="mt-3 text-sm font-medium">Upload preview or attachment</p>
+                <p className="mt-1 text-xs text-[var(--muted)]">3 sample attachments · click to preview or replace.</p>
+              </button>
+              <div className="space-y-2 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-3">
+                {["cover-preview.png", "source-note.md", "reference-scan.pdf"].map((name) => (
+                  <div key={name} className="flex items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs">
+                    <span className="font-medium">{name}</span>
+                    <span className="text-[var(--muted)]">attached</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
         </div>
 
         <div className="sticky bottom-0 flex items-center justify-end gap-3 border-t border-[var(--border)] bg-[var(--card)]/95 px-6 py-4 backdrop-blur"><Button variant="outline" onClick={onClose}>Cancel</Button><Button>Create Item</Button></div>
       </div>
+      <AttachmentPreviewModal open={attachmentOpen} onClose={() => setAttachmentOpen(false)} />
     </div>
   );
 }

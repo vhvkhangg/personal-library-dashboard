@@ -2,9 +2,9 @@
 
 ## Recommendation
 
-Do not start random backend features first. Phase 2 should implement authentication because the accepted MVP order is Layout Shell → Auth.
+Phase 2 starts with Authentication.
 
-## Phase 2 scope
+## Scope
 
 Implement:
 
@@ -19,7 +19,7 @@ Implement:
 9. frontend login wiring,
 10. protected dashboard route behavior.
 
-## Out of scope for Phase 2
+## Out of scope
 
 Do not implement yet:
 
@@ -32,7 +32,7 @@ Do not implement yet:
 - export engine,
 - advanced NSFW backend policy.
 
-## Backend packages to use
+## Backend packages
 
 Primary packages:
 
@@ -42,15 +42,3 @@ common/security/
 common/error/
 common/web/
 ```
-
-## Frontend areas to connect
-
-- `/login`
-- app shell protected route behavior
-- auth session provider
-- logout action later
-- `H` PIN stays UI-only unless explicitly included in a later security phase
-
-## Database
-
-Phase 2 should introduce the first real migrations only for auth tables.

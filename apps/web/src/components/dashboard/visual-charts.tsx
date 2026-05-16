@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-type ChartDatum = {
+export type ChartDatum = {
   label: string;
   value: number;
 };
@@ -25,16 +25,26 @@ function normalizePoints(data: ChartDatum[], width = 420, height = 150) {
 
 function ChartShell({ title, description, children }: ChartProps & { children: ReactNode }) {
   return (
-    <section className="liquid-surface rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h2 className="text-lg font-semibold">{title}</h2>
-          <p className="mt-1 text-sm text-[var(--muted)]">{description}</p>
-        </div>
-        <span className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-xs font-medium text-[var(--muted)]">Hover points</span>
+    <section className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
+      <div>
+        <h2 className="text-lg font-semibold">{title}</h2>
+        <p className="mt-1 text-sm text-[var(--muted)]">{description}</p>
       </div>
       {children}
     </section>
+  );
+}
+
+function SvgTooltip({ x, y, label, value }: { x: number; y: number; label: string; value: number }) {
+  const tooltipX = Math.max(8, Math.min(x - 44, 324));
+  const tooltipY = Math.max(8, y - 48);
+
+  return (
+    <g className="pointer-events-none opacity-0 transition-opacity group-hover:opacity-100">
+      <rect x={tooltipX} y={tooltipY} width="88" height="38" rx="8" fill="var(--tooltip-bg)" stroke="var(--tooltip-border)" />
+      <text x={tooltipX + 10} y={tooltipY + 16} className="fill-[var(--muted)] text-[9px]">{label}</text>
+      <text x={tooltipX + 10} y={tooltipY + 31} className="fill-[var(--foreground)] text-[11px] font-semibold">{value}</text>
+    </g>
   );
 }
 
@@ -82,7 +92,10 @@ export function ColumnChart({ title, description, data }: ChartProps) {
               <div className="w-full rounded-lg bg-[image:var(--accent-active)]" style={{ height: `${Math.max((item.value / max) * 100, 8)}%` }}>
                 <span className="sr-only">{item.label}: {item.value}</span>
               </div>
-              <div className="pointer-events-none absolute -top-9 left-1/2 hidden -translate-x-1/2 rounded-lg border border-[var(--border)] bg-[var(--tooltip-bg)] px-2 py-1 text-xs shadow-lg group-hover:block">{item.label}: {item.value}</div>
+              <div className="pointer-events-none absolute -top-10 left-1/2 hidden min-w-24 -translate-x-1/2 rounded-lg border border-[var(--border)] bg-[var(--tooltip-bg)] px-2 py-1 text-xs shadow-lg group-hover:block">
+                <span className="block text-[var(--muted)]">{item.label}</span>
+                <span className="font-semibold">{item.value}</span>
+              </div>
             </div>
             <span className="truncate text-xs text-[var(--muted)]">{item.label}</span>
           </div>
@@ -102,7 +115,9 @@ export function LineChart({ title, description, data }: ChartProps) {
         <polyline points={line} fill="none" stroke="#7c3aed" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
         {points.map((point) => (
           <g key={point.label} className="group">
-            <circle cx={point.x} cy={point.y} r="6" fill="#6366f1"><title>{`${point.label}: ${point.value}`}</title></circle>
+            <circle cx={point.x} cy={point.y} r="7" fill="#6366f1" />
+            <circle cx={point.x} cy={point.y} r="18" fill="transparent" />
+            <SvgTooltip x={point.x} y={point.y} label={point.label} value={point.value} />
             <text x={point.x} y="182" textAnchor="middle" className="fill-[var(--muted)] text-[10px]">{point.label}</text>
           </g>
         ))}
@@ -122,8 +137,10 @@ export function AreaChart({ title, description, data }: ChartProps) {
         <polygon points={area} fill="rgba(99,102,241,0.28)" />
         <polyline points={line} fill="none" stroke="#6366f1" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
         {points.map((point) => (
-          <g key={point.label}>
-            <circle cx={point.x} cy={point.y} r="6" fill="#7c3aed"><title>{`${point.label}: ${point.value}`}</title></circle>
+          <g key={point.label} className="group">
+            <circle cx={point.x} cy={point.y} r="7" fill="#7c3aed" />
+            <circle cx={point.x} cy={point.y} r="18" fill="transparent" />
+            <SvgTooltip x={point.x} y={point.y} label={point.label} value={point.value} />
             <text x={point.x} y="212" textAnchor="middle" className="fill-[var(--muted)] text-[10px]">{point.label}</text>
           </g>
         ))}

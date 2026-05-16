@@ -14,6 +14,7 @@ import {
   PanelRightClose,
   PanelRightOpen,
   Pin,
+  Plus,
   RefreshCcw,
   Save,
   Search,
@@ -88,7 +89,7 @@ const inspectorTabs = [
 
 type Citation = (typeof citations)[number];
 
-type RailTab = "settings" | "documents";
+type RailTab = "chats" | "documents";
 
 function MiniLogo({ variant = "vk" }: { variant?: "vk" | "rag" }) {
   if (variant === "vk") {
@@ -220,35 +221,123 @@ function CitationPreviewDialog({ citation, onClose }: { citation: Citation | nul
   );
 }
 
-function ChatRail({ railTab, setRailTab, deleteDocument }: { railTab: RailTab; setRailTab: (value: RailTab) => void; deleteDocument: (target: string) => void }) {
+function SettingsDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
+  if (!open) return null;
+
   return (
-    <aside className="liquid-surface rounded-3xl border border-[var(--border)] bg-[var(--card)] p-4 shadow-sm">
-      <div className="grid grid-cols-2 gap-2 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-1">
+    <div className="fixed inset-0 z-[240] flex h-dvh w-dvw items-center justify-center bg-slate-950/70 p-4 backdrop-blur-md" onClick={onClose}>
+      <div className="w-full max-w-2xl rounded-3xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-2xl shadow-black/40" onClick={(event) => event.stopPropagation()}>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-sm font-medium text-[var(--muted)]">RAG settings</p>
+            <h3 className="mt-1 text-2xl font-semibold">Retrieval settings</h3>
+          </div>
+          <button type="button" className="focus-ring rounded-xl p-2 text-[var(--muted)] hover:bg-[var(--interactive-hover-bg)] hover:text-[var(--interactive-hover-text)]" onClick={onClose}>
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <label className="space-y-2"><span className="text-sm font-medium text-[var(--muted)]">Chunk size</span><input defaultValue="700" className="focus-ring h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 text-sm" /></label>
+          <label className="space-y-2"><span className="text-sm font-medium text-[var(--muted)]">Chunk overlap</span><input defaultValue="120" className="focus-ring h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 text-sm" /></label>
+          <label className="space-y-2"><span className="text-sm font-medium text-[var(--muted)]">Top-k</span><input defaultValue="12" className="focus-ring h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 text-sm" /></label>
+          <label className="space-y-2"><span className="text-sm font-medium text-[var(--muted)]">Rerank top-n</span><input defaultValue="6" className="focus-ring h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 text-sm" /></label>
+        </div>
+
+        <div className="mt-6 flex justify-end gap-3">
+          <Button variant="outline" onClick={onClose}><RefreshCcw className="h-4 w-4" />Reset</Button>
+          <Button onClick={onClose}><Save className="h-4 w-4" />Save</Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function UploadDocumentDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-[240] flex h-dvh w-dvw items-center justify-center bg-slate-950/70 p-4 backdrop-blur-md" onClick={onClose}>
+      <div className="w-full max-w-xl rounded-3xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-2xl shadow-black/40" onClick={(event) => event.stopPropagation()}>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-sm font-medium text-[var(--muted)]">Document upload</p>
+            <h3 className="mt-1 text-2xl font-semibold">Add documents to RAG</h3>
+          </div>
+          <button type="button" className="focus-ring rounded-xl p-2 text-[var(--muted)] hover:bg-[var(--interactive-hover-bg)] hover:text-[var(--interactive-hover-text)]" onClick={onClose}>
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        <div className="mt-5 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-7 text-center">
+          <Upload className="mx-auto h-6 w-6 text-[var(--muted)]" />
+          <p className="mt-3 text-sm font-semibold">Drop PDF, Markdown, DOCX, or scanned images here</p>
+          <p className="mt-1 text-xs text-[var(--muted)]">UI preview only. Later phases will OCR, chunk, embed, and index these files.</p>
+        </div>
+
+        <div className="mt-5 space-y-3">
+          {[
+            ["WorldBuildingGuide.pdf", "Ready · 42 pages", "100%"],
+            ["CharacterNotes.md", "Ready · Markdown", "100%"],
+            ["RawScan01.png", "OCR queued", "42%"],
+          ].map(([name, meta, progress]) => (
+            <div key={name} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3">
+              <div className="flex items-center justify-between gap-3">
+                <div><p className="text-sm font-semibold">{name}</p><p className="mt-1 text-xs text-[var(--muted)]">{meta}</p></div>
+                <span className="text-xs font-semibold">{progress}</span>
+              </div>
+              <div className="mt-3 h-2 rounded-full bg-[var(--surface-muted)]"><div className="h-2 rounded-full bg-[image:var(--accent-active)]" style={{ width: progress }} /></div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 flex justify-end gap-3">
+          <Button variant="outline" onClick={onClose}>Cancel</Button>
+          <Button onClick={onClose}>Add documents</Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ChatRail({ railTab, setRailTab, deleteDocument, openSettings, openUpload }: { railTab: RailTab; setRailTab: (value: RailTab) => void; deleteDocument: (target: string) => void; openSettings: () => void; openUpload: () => void }) {
+  return (
+    <aside className="rounded-3xl border border-[var(--border)] bg-[var(--card)] p-4 shadow-sm">
+      <Button variant="outline" className="mb-3 w-full justify-center" onClick={openSettings}>
+        <SlidersHorizontal className="h-4 w-4" /> Settings
+      </Button>
+
+      <div className="flex gap-1.5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-1">
         {[
-          { key: "settings", label: "Settings", icon: SlidersHorizontal },
-          { key: "documents", label: "Documents", icon: FileText },
-        ].map(({ key, label, icon: Icon }) => {
+          { key: "chats", label: "Chats", icon: Sparkles, className: "flex-[1]" },
+          { key: "documents", label: "Docs", icon: FileText, className: "flex-[1]" },
+        ].map(({ key, label, icon: Icon, className }) => {
           const active = railTab === key;
           return (
             <button
               key={key}
               type="button"
-              className={cn("flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition", active ? "bg-[image:var(--accent-active)] text-white" : "text-[var(--muted)] hover:bg-[var(--interactive-hover-bg)] hover:text-[var(--interactive-hover-text)]")}
+              className={cn("flex min-w-0 items-center justify-start gap-2 rounded-xl px-3 py-2 text-sm font-medium transition", className, active ? "bg-[image:var(--accent-active)] text-white" : "text-[var(--muted)] hover:bg-[var(--interactive-hover-bg)] hover:text-[var(--interactive-hover-text)]")}
               onClick={() => setRailTab(key as RailTab)}
             >
-              <Icon className="h-4 w-4" />
-              <span>{label}</span>
+              <Icon className="h-5 w-5 shrink-0" />
+              <span className="truncate">{label}</span>
             </button>
           );
         })}
       </div>
 
       <div className="mt-5">
-        {railTab === "settings" ? (
+        {railTab === "chats" ? (
           <div className="space-y-4">
-            <div>
-              <h2 className="text-lg font-semibold">Chats</h2>
-              <p className="mt-1 text-xs text-[var(--muted)]">Saved local threads for document QA.</p>
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <h2 className="text-lg font-semibold">Chats</h2>
+                <p className="mt-1 text-xs text-[var(--muted)]">Saved local threads for document QA.</p>
+              </div>
+              <Button variant="outline" size="sm" className="shrink-0">
+                <Plus className="h-4 w-4" /> New chat
+              </Button>
             </div>
             <div className="space-y-3">
               {chatThreads.map((thread) => (
@@ -267,23 +356,6 @@ function ChatRail({ railTab, setRailTab, deleteDocument }: { railTab: RailTab; s
                 </div>
               ))}
             </div>
-
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-[var(--accent)]" />
-                <h3 className="text-sm font-semibold">Retrieval settings</h3>
-              </div>
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                <label className="space-y-1"><span className="text-xs font-medium text-[var(--muted)]">Chunk</span><input defaultValue="700" className="focus-ring h-10 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 text-sm" /></label>
-                <label className="space-y-1"><span className="text-xs font-medium text-[var(--muted)]">Overlap</span><input defaultValue="120" className="focus-ring h-10 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 text-sm" /></label>
-                <label className="space-y-1"><span className="text-xs font-medium text-[var(--muted)]">Top-k</span><input defaultValue="12" className="focus-ring h-10 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 text-sm" /></label>
-                <label className="space-y-1"><span className="text-xs font-medium text-[var(--muted)]">Rerank</span><input defaultValue="6" className="focus-ring h-10 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 text-sm" /></label>
-              </div>
-              <div className="mt-4 flex justify-end gap-2">
-                <Button variant="outline" size="sm"><RefreshCcw className="h-4 w-4" />Reset</Button>
-                <Button size="sm"><Save className="h-4 w-4" />Save</Button>
-              </div>
-            </div>
           </div>
         ) : (
           <div className="space-y-4">
@@ -292,7 +364,7 @@ function ChatRail({ railTab, setRailTab, deleteDocument }: { railTab: RailTab; s
                 <h2 className="text-lg font-semibold">Documents</h2>
                 <p className="mt-1 text-xs text-[var(--muted)]">Select sources for this chat.</p>
               </div>
-              <Button variant="outline" size="icon" className="h-9 w-9"><Upload className="h-4 w-4" /></Button>
+              <Button variant="outline" size="icon" className="h-10 w-10" onClick={openUpload}><Upload className="h-5 w-5" /></Button>
             </div>
 
             <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
@@ -366,21 +438,25 @@ function BenchmarkIcon({ status }: { status: "good" | "warn" | "bad" }) {
   return <XCircle className="h-4 w-4 text-rose-400" />;
 }
 
-function BenchmarkTrack() {
+function BenchmarkTrack({ status }: { status: "good" | "warn" | "bad" }) {
+  const activeCount = status === "good" ? 2 : status === "warn" ? 3 : 4;
   const segments = [
-    { icon: CheckCircle2, className: "bg-emerald-500/20 text-emerald-300" },
-    { icon: CheckCircle2, className: "bg-emerald-500/20 text-emerald-300" },
-    { icon: TriangleAlert, className: "bg-amber-500/20 text-amber-300" },
-    { icon: XCircle, className: "bg-rose-500/20 text-rose-300" },
+    { icon: CheckCircle2, activeClass: "bg-emerald-500/25 text-emerald-300" },
+    { icon: CheckCircle2, activeClass: "bg-emerald-500/25 text-emerald-300" },
+    { icon: TriangleAlert, activeClass: "bg-amber-500/25 text-amber-300" },
+    { icon: XCircle, activeClass: "bg-rose-500/25 text-rose-300" },
   ];
 
   return (
-    <div className="mt-3 grid grid-cols-4 gap-1.5">
-      {segments.map(({ icon: Icon, className }, index) => (
-        <span key={index} className={cn("flex h-7 items-center justify-center rounded-lg", className)}>
-          <Icon className="h-3.5 w-3.5" />
-        </span>
-      ))}
+    <div className="mt-3 grid grid-cols-4 gap-1.5" aria-label={`Benchmark threshold: ${status}`}>
+      {segments.map(({ icon: Icon, activeClass }, index) => {
+        const active = index < activeCount;
+        return (
+          <span key={index} className={cn("flex h-7 items-center justify-center rounded-lg border border-[var(--border)]", active ? activeClass : "bg-[var(--surface-muted)] text-[var(--muted)]/35")}>
+            {active ? <Icon className="h-3.5 w-3.5" /> : null}
+          </span>
+        );
+      })}
     </div>
   );
 }
@@ -425,7 +501,7 @@ function InspectorPanel({ activeInspector, setActiveInspector, expandedCitations
                 </div>
                 <span className="text-sm font-semibold">{value}</span>
               </div>
-              <BenchmarkTrack />
+              <BenchmarkTrack status={status} />
             </div>
           ))}
           <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-4">
@@ -454,7 +530,9 @@ export function RagWorkspacePage() {
   const [inspectorOpen, setInspectorOpen] = React.useState(true);
   const [mode, setMode] = React.useState("strict");
   const [model, setModel] = React.useState("qwen3-8b");
-  const [railTab, setRailTab] = React.useState<RailTab>("settings");
+  const [railTab, setRailTab] = React.useState<RailTab>("chats");
+  const [settingsOpen, setSettingsOpen] = React.useState(false);
+  const [uploadOpen, setUploadOpen] = React.useState(false);
   const [deleteTarget, setDeleteTarget] = React.useState<string | null>(null);
   const [expandedCitations, setExpandedCitations] = React.useState<number[]>([]);
   const [selectedCitation, setSelectedCitation] = React.useState<Citation | null>(null);
@@ -472,18 +550,20 @@ export function RagWorkspacePage() {
           <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Ask questions over selected documents, inspect citations, and review local benchmark metrics in one workspace.</p>
         </header>
 
-        <section className="grid gap-4 xl:-ml-3 xl:grid-cols-[300px_minmax(0,1fr)]">
-          <ChatRail railTab={railTab} setRailTab={setRailTab} deleteDocument={setDeleteTarget} />
+        <section className="grid gap-4 xl:-ml-6 xl:grid-cols-[280px_minmax(0,1fr)]">
+          <ChatRail railTab={railTab} setRailTab={setRailTab} deleteDocument={setDeleteTarget} openSettings={() => setSettingsOpen(true)} openUpload={() => setUploadOpen(true)} />
 
-          <section className="liquid-surface overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
-            <div className="flex flex-wrap items-center gap-3 border-b border-[var(--border)] px-5 py-4">
-              <div className="w-44">
+          <section className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
+            <div className="flex flex-wrap items-end gap-3 border-b border-[var(--border)] px-5 py-4">
+              <label className="w-44 space-y-1">
+                <span className="text-xs font-medium text-[var(--muted)]">Model</span>
                 <SelectMenu value={model} onChange={setModel} options={[{ value: "qwen3-8b", label: "Qwen3 8B" }, { value: "qwen3-14b", label: "Qwen3 14B" }, { value: "vistral", label: "Vistral" }]} />
-              </div>
-              <div className="w-36">
+              </label>
+              <label className="w-36 space-y-1">
+                <span className="text-xs font-medium text-[var(--muted)]">Mode</span>
                 <SelectMenu value={mode} onChange={setMode} options={[{ value: "strict", label: "Strict" }, { value: "balanced", label: "Balanced" }, { value: "fast", label: "Fast" }]} />
-              </div>
-              <div className="relative min-w-[240px] flex-1">
+              </label>
+              <div className="relative min-w-[320px] flex-1">
                 <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted)]" />
                 <input className="focus-ring h-10 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] pl-10 pr-3 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)]" placeholder="Search this chat..." />
               </div>
@@ -548,6 +628,8 @@ export function RagWorkspacePage() {
       </div>
       <ConfirmDeleteModal target={deleteTarget} onClose={() => setDeleteTarget(null)} />
       <CitationPreviewDialog citation={selectedCitation} onClose={() => setSelectedCitation(null)} />
+      <SettingsDialog open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      <UploadDocumentDialog open={uploadOpen} onClose={() => setUploadOpen(false)} />
     </>
   );
 }

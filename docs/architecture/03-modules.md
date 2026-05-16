@@ -28,6 +28,8 @@ Routes:
 - `/fiction/character`
 - `/fiction/author`
 
+Reader tab applies to reader-style submodules.
+
 ## Film
 
 Routes:
@@ -38,7 +40,7 @@ Routes:
 - `/film/actor`
 - `/film/character`
 
-Actor fields should use gender and nation/country-style context rather than generic role/type when needed.
+Movie/Series use Player tab.
 
 ## Media
 
@@ -55,11 +57,13 @@ Routes:
 - `/media/music`
 - `/media/musician`
 
-`Album` is a first-class Media module. Albums can group Image, Picture, and Illustration items into one collection viewer.
+Notes:
 
-`Account` stores followed social accounts/creators and has a viewer-style tab for profile details, links, and platform notes.
-
-`Song` is not a visible module in the accepted navigation. Song-like content belongs under Music.
+- Album is first-class.
+- Album can contain Image, Picture, and Illustration.
+- Account stores social/media accounts of creators the user follows.
+- Account has Viewer-style preview.
+- Song is not a visible module; song-like content belongs under Music.
 
 ## F&B
 
@@ -67,10 +71,10 @@ Routes:
 
 - `/fnb`
 - `/fnb/food`
-- `/fnb/snack`
 - `/fnb/beverage`
+- `/fnb/snack`
 
-F&B uses its own tag scope. F&B tags should not be conflated with Fiction tags. Snack is separate from Food so quick/light items can be tracked independently.
+F&B has its own tag scope and should not reuse Fiction tags unless intentionally global.
 
 ## Information
 
@@ -81,7 +85,7 @@ Routes:
 - `/information/technology`
 - `/information/miscellaneous`
 
-Information tables do not need Avatar columns by default.
+Information tables do not need Avatar by default.
 
 ## NSFW
 
@@ -94,7 +98,7 @@ Routes:
 - `/nsfw/character`
 - `/nsfw/author`
 
-NSFW visibility must eventually be enforced by backend filters, not frontend hiding only.
+NSFW must eventually be filtered by backend API, not frontend-only hiding.
 
 ## Ideaverse
 
@@ -116,7 +120,7 @@ Routes:
 - `/ideaverse/villains`
 - `/ideaverse/templates`
 
-Ideaverse content is read-only in the web app. The external Obsidian vault remains the writing and editing source of truth.
+Ideaverse is read-only in the web app.
 
 ## RAG/Documents
 
@@ -124,7 +128,7 @@ Route:
 
 - `/documents`
 
-The UI presents chats, uploaded documents, retrieval settings, citations, and benchmark information. Backend/RAG behavior starts in a later phase.
+RAG Workspace is UI-only in Phase 1.
 
 ## Profile
 
@@ -132,7 +136,7 @@ Route:
 
 - `/profile`
 
-Profile stores personal workspace information about the single owner. It is a system module shown above Settings.
+Profile stores personal workspace/profile information about the owner.
 
 ## Settings
 
@@ -140,4 +144,4 @@ Route:
 
 - `/settings`
 
-Settings are UI-only in Phase 1. RAG-specific settings belong in the RAG Workspace, not global Settings.
+Settings are general app settings. RAG-specific controls live in RAG Workspace.

@@ -6,20 +6,25 @@
 - TypeScript.
 - Tailwind-style utility classes.
 - shadcn/ui-inspired primitives.
-- Dark mode is the currently polished primary theme.
-- Light mode is supported and should remain usable.
+- Dark-first accepted visual style.
+- Light mode supported.
+
+## Accepted visual policy
+
+- Keep the current dark dashboard style.
+- Do not reintroduce the removed `liquid-surface` / liquid-glass effect.
+- Use clear cards, borders, hover states, badges, dropdowns, and modal overlays.
+- Modal overlays must cover the full viewport.
 
 ## Layout shell
 
-The accepted shell contains:
-
 ```txt
-Icon Sidebar | Module Sidebar | Header + Main Content
+Icon Sidebar | Module Sidebar | Header | Main Content
 ```
 
 ### Icon sidebar
 
-Primary icons:
+Top-level modules:
 
 1. Dashboard
 2. Fiction
@@ -30,66 +35,67 @@ Primary icons:
 7. NSFW
 8. Ideaverse
 9. RAG/Documents
+10. Profile
+11. Settings
 
-System icons:
-
-- Profile
-- Settings
-
-A separator exists between NSFW and Ideaverse, and another before Settings.
-
-### Module sidebar
-
-Each module owns its secondary menu. Ideaverse uses a `Core` dropdown for its detailed sections.
+Profile sits above Settings.
 
 ### Header
 
 Header contains:
 
-- module label/title,
-- global `Search everything...` command entry,
+- global `Search everything...`,
 - theme toggle,
-- protected-zone `H` button,
-- user/logo controls when applicable.
+- protected `H` button,
+- `Nhật ký` journal button.
+
+### Journal
+
+The header activity dialog is called `Nhật ký`, not Notification.
+
+Code naming should use:
+
+- `JournalDialog`
+- `journalOpen`
+- `journalEntries`
+
+Journal entries can be read or unread. Unread entries use a distinct background/border and unread dot.
+
+Sample journal entry types:
+
+- new item added,
+- Ideaverse index refreshed,
+- RAG question answered.
 
 ## Command palette
 
-The command palette is currently UI-only.
+The command palette is UI-only in Phase 1.
 
-Navigate group:
+It includes:
 
-- Open Dashboard
-- Open RAG Workspace
-- Open Ideaverse
-- Open Settings
-
-Create group:
-
-- New Item
-- New Tag
+- Navigate actions,
+- Create actions,
+- sample result previews when text is typed.
 
 ## Module table pattern
 
-Every editable content module uses this table shell unless documented otherwise:
+Content modules use:
 
-```txt
-Module title
-Subtitle/description
-Status tabs
-Tags panel + New Tag
-Search / type filter / tag filter / from date / to date / reset / filter
-Columns button
-Export button
-Favorites table
-Items table
-Pagination
-```
+- status tabs,
+- Tags panel,
+- New Tag button,
+- search/type/tag/date filters,
+- reset/filter buttons,
+- Columns preview,
+- Export preview,
+- Favorites table,
+- Items table.
 
 Row columns:
 
 - Fav
 - #
-- Avatar, except Information modules
+- Avatar where applicable
 - Item title + short description
 - Type/progress/module-specific field
 - Tags
@@ -105,81 +111,54 @@ Actions:
 - Edit item
 - Delete with confirmation
 
+## New/Edit Item
+
+New/Edit Item modals:
+
+- do not include Visibility,
+- do not include Mark as favorite,
+- support multi-attachment preview,
+- align attachment title and metadata left,
+- let Favorite be controlled by row star,
+- let Status be controlled by row status dropdown.
+
 ## Detail modal
 
 Detail modal contains:
 
-- header with `View details`, item title, favorite star, and Tags box,
-- Summary block,
+- header with View details label, item title, favorite star, and Tags box,
+- Summary,
 - Description,
 - Note,
-- Facts panel.
+- Facts.
 
-Summary includes status. Facts no longer contains status/favorite.
+Summary includes status. Facts should not duplicate status/favorite.
 
-## Edit modal
+## Viewer/Player/Reader tabs
 
-Edit modal contains:
+Modules with consumption surfaces use tabs inside the module:
 
-- title,
-- type,
-- category/context,
-- rating,
-- visibility,
-- description,
-- summary,
-- notes,
-- existing-tag selector,
-- attachment preview/replace placeholder.
+- `Overview`
+- `Player` for music/video/movie/series style content
+- `Reader` for fiction/book/comic/manga style content
+- `Viewer` for image/picture/illustration/album/account preview surfaces
 
-Status is edited from the table column, not from Edit Item. Favorite is controlled by the star, not Edit Item.
+The media/player/viewer area appears in the second tab. Details for the selected item are below the viewer/player/reader, not in a right-side box.
 
-## Media previews
+## RAG Workspace
 
-Media modules include UI-only viewer/player previews:
+RAG Workspace contains:
 
-- Movie/Series watch preview.
-- Video preview.
-- Music player preview.
-- Image/Picture/Illustration viewer.
-- Album viewer for mixed Image/Picture/Illustration collections.
-- Book/Novel/Manga/Manhua/Manhwa/Convert/NSFW viewer previews where relevant.
+- left rail with `Settings`, `Chats`, and `Documents` controls,
+- `Settings` opens a dialog,
+- Documents shows upload progress, document status badges, and selectable sources,
+- chat header with Model, Mode, and search,
+- answer citations as clickable numbers,
+- citation click opens a source-highlight preview dialog,
+- right inspector panel with Citation/Benchmark tabs,
+- inspector can be collapsed through an icon-only control,
+- Benchmark uses 4 threshold blocks where reached thresholds are green/yellow/red and unreached thresholds are muted.
 
-## RAG Workspace UI
+## Ideaverse
 
-RAG Workspace uses a left rail and a main chat card:
-
-```txt
-Header: RAG Workspace title + description
-Left rail: Settings/Documents segmented controls, chat list, retrieval settings, document selection
-Main card: model selector, mode selector, chat search, messages, composer
-Right inspector: collapsible Citation/Benchmark rail inside the chat card
-```
-
-Current behavior is UI-only.
-
-Accepted RAG Workspace details:
-
-- The left rail sits close to the icon sidebar and stays narrower than the chat area.
-- The left rail has `Settings` and `Documents` tabs.
-- Documents no longer uses the `Uploaded documents` label.
-- Documents show upload progress, per-document status badges, and selected-source checkboxes.
-- The chat header contains model selection, mode selection, and chat search.
-- The chat composer has no upload button; document upload belongs in the Documents tab.
-- Question and answer bubbles show timestamps.
-- Inline citation numbers are clickable and open a document-highlight preview dialog.
-- The inspector has icon-only open/close control and no `Show/Hide inspector` text.
-- Citation cards omit page/line text in the compact inspector view.
-- Benchmark cards include a four-segment quality strip: two green segments, one yellow segment, and one red segment.
-
-## Ideaverse UI
-
-Ideaverse is now read-only in the web app. The web app previews Markdown-like content from an external vault but does not edit the vault.
-
-## Dashboard chart layout
-
-Dashboard chart rows should contain at most two charts. Top Tags should share a row with status breakdown. Column and line charts share one row. Area and donut charts share one row, with the area chart given a larger internal SVG height and date-aware hover labels.
-
-## Liquid-glass surface treatment
-
-Phase 1 uses a dark-first liquid-glass treatment for sidebars, header, cards, tables, charts, and modal surfaces. Use this as a surface treatment only; do not reduce readability or keyboard accessibility.
+Ideaverse is read-only on the web app. Editing remains in Obsidian.

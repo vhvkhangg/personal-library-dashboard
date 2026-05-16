@@ -6,7 +6,7 @@ const updates = [
 
 export function RecentUpdates() {
   return (
-    <section className="liquid-surface rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
+    <section className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
       <h2 className="text-lg font-semibold">Recent Updates</h2>
       <p className="mt-1 text-sm text-[var(--muted)]">Latest changed items.</p>
 

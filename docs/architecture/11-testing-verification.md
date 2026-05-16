@@ -2,21 +2,13 @@
 
 ## Frontend
 
-Run from repo root when configured:
-
 ```powershell
 pnpm --filter @pld/web typecheck
 pnpm --filter @pld/web lint
-pnpm --filter @pld/web build
-```
-
-During UI development:
-
-```powershell
 pnpm --filter @pld/web dev
 ```
 
-If Next/Turbopack cache warnings occur, stop duplicate dev servers and clear cache:
+Clear Next cache:
 
 ```powershell
 Remove-Item -Recurse -Force apps\web\.next -ErrorAction SilentlyContinue
@@ -24,7 +16,7 @@ Remove-Item -Recurse -Force apps\web\.next -ErrorAction SilentlyContinue
 
 ## Backend
 
-After Phase 2 adds real backend implementation:
+After Phase 2 adds real implementation:
 
 ```powershell
 mvn -f services\api\pom.xml test
@@ -33,7 +25,7 @@ mvn -f services\api\pom.xml verify
 
 ## Python RAG
 
-After the service is implemented:
+After implementation:
 
 ```powershell
 uv run ruff check .

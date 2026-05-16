@@ -27,7 +27,7 @@ export function MenuSidebar() {
   const activeClass = "bg-[image:var(--accent-active)] text-white shadow-md shadow-indigo-950/20";
 
   return (
-    <aside className="liquid-surface fixed inset-y-0 left-20 z-30 flex w-56 flex-col border-r border-[var(--border)] bg-[var(--card)]/90 px-4 py-0 backdrop-blur-xl">
+    <aside className="fixed inset-y-0 left-20 z-30 flex w-56 flex-col border-r border-[var(--border)] bg-[var(--card)]/90 px-4 py-0 backdrop-blur-xl">
       <div className="flex h-16 flex-col justify-center">
         <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">Module</p>
         <h2 className="mt-1 text-lg font-semibold leading-none">{activeNavigation.label}</h2>

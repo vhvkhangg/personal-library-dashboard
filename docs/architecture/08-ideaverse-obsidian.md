@@ -4,21 +4,11 @@
 
 Ideaverse is read-only on the web app.
 
-The external Obsidian vault is the source of truth and the editing surface. The web app previews/indexes content but does not edit Markdown files.
-
-## Vault location
-
-Current external vault path:
-
-```txt
-C:/Users/VU KHANG/OneDrive/IDEAVERSE
-```
-
-Do not put the vault inside the repository.
+The external Obsidian vault is the source of truth and editing surface.
 
 ## Web role
 
-The web app may eventually:
+The web app may later:
 
 - read Markdown files,
 - render Markdown preview,
@@ -26,9 +16,10 @@ The web app may eventually:
 - cache title/type/tags/frontmatter,
 - support search/filter,
 - support RAG ingestion state,
-- track preview reading progress.
+- track preview reading progress,
+- show journal entries when index refreshes.
 
-The web app should not:
+The web app must not:
 
 - edit Markdown,
 - silently overwrite files,
@@ -37,7 +28,7 @@ The web app should not:
 
 ## Database role
 
-Database should index/cache:
+Database may cache:
 
 - vault-relative path,
 - title,
@@ -57,5 +48,3 @@ theme folders
 snippet folders
 temporary files
 ```
-
-`*.canvas` can be handled later as metadata.

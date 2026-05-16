@@ -4,7 +4,7 @@
 
 Use hybrid relational + JSONB modeling.
 
-Stable fields become real columns. Sparse or experimental fields can live in JSONB metadata.
+Stable fields become real columns. Sparse or experimental fields may live in JSONB metadata.
 
 ## Common item fields
 
@@ -21,17 +21,9 @@ Stable fields become real columns. Sparse or experimental fields can live in JSO
 - `progress`
 - `is_favorite`
 - `is_nsfw`
-- `visibility`
 - `created_at`
 - `updated_at`
 - `metadata`
-
-## Rating
-
-- Range: `0.0` to `10.0`.
-- One decimal place.
-- Store as `numeric(3,1)` or equivalent.
-- Validate frontend and backend.
 
 ## Status
 
@@ -41,7 +33,11 @@ Phase 1 UI statuses:
 - Draft
 - Archived
 
-Future backend should store status as a constrained enum or reference table.
+Status is edited from the table row dropdown.
+
+## Favorite
+
+Favorite is controlled by the row star, not by New/Edit Item modals.
 
 ## Tags
 
@@ -51,34 +47,35 @@ Tags support:
 - module-scoped tags,
 - item assignments.
 
-Suggested scopes:
+Item create/edit selects existing tags only. Tag creation is a separate flow.
 
-```txt
-global
-fiction
-film
-media
-fnb
-information
-nsfw
-ideaverse
-documents
-```
+## Journal
 
-New/Edit Item should select from existing tags. Creating new tags is separate from editing items.
+Journal entries may eventually store:
 
-## JSONB
+- entry type,
+- module,
+- title,
+- body,
+- timestamp,
+- read/unread status,
+- metadata.
 
-Allowed for sparse fields such as:
+Phase 1 journal is UI-only.
 
-- `worldSetting`
-- `genreNotes`
-- `watchedUntil`
-- `listenedUntil`
-- `eatenBefore`
-- `shotAt`
-- `illustratedCharacter`
-- `platforms`
-- module-specific experimental fields
+## Media Account
 
-Promote JSONB fields to real columns when they become frequent filters or joins.
+Media Account can later store:
+
+- platform,
+- handle,
+- display name,
+- profile URL,
+- avatar reference,
+- followed status,
+- tags,
+- notes.
+
+## Album
+
+Album can reference Image, Picture, and Illustration items without duplicating binary files.

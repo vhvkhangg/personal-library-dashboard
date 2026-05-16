@@ -6,9 +6,9 @@
 
 Current phase status:
 
-- Phase 1 UI is accepted.
-- Final Phase 1 docs/services cleanup is in progress.
-- Phase 2 should start with Authentication after the Phase 1 cleanup is committed.
+- Phase 1 UI is accepted as final.
+- Current sync task updates docs, services skeleton, skills, AGENTS.md, and README.md to match the final UI.
+- Phase 2 should start with Authentication after this sync is committed.
 
 The project is also a learning project for:
 
@@ -145,8 +145,10 @@ The app contains these high-level modules:
 7. NSFW
 8. Ideaverse
 9. Documents/RAG
-10. Export
-11. Storage
+10. Profile
+11. Settings
+12. Export
+13. Storage
 
 ### Fiction
 
@@ -178,6 +180,7 @@ Submodules:
 
 - Dashboard
 - Album
+- Account
 - Image
 - Picture
 - Illustration
@@ -190,6 +193,7 @@ Notes:
 
 - Album is a first-class Media module.
 - An Album can group Image, Picture, and Illustration items.
+- Account stores social/media accounts of creators/users the owner follows and has a Viewer surface.
 - Song is not a visible top-level submodule; song-like content belongs under Music.
 
 ### F&B
@@ -199,6 +203,7 @@ Submodules:
 - Dashboard
 - Food
 - Beverage
+- Snack
 
 ### Information
 
@@ -249,7 +254,25 @@ Submodules:
   - Phản Diện
   - Templates
 
-Ideaverse content is primarily Markdown in an external Obsidian vault. The web app may read/write Markdown files, but the vault remains the source of truth.
+Ideaverse content is primarily Markdown in an external Obsidian vault. The web app may read, index, search, and preview Markdown files, but must not edit or write Markdown unless the user explicitly changes this decision.
+
+### Profile
+
+Profile is a top-level module above Settings in the icon sidebar.
+
+Purpose:
+
+- personal workspace/profile information about the owner,
+- future user/account metadata,
+- not a multi-user social profile system.
+
+### Journal
+
+The header activity dialog is called `Nhật ký` / Journal.
+
+Code naming should use `Journal` / `journal`, not `Notification` / `notification`.
+
+Journal entries can have read/unread state. The first sample unread entry is `Added new Media item`.
 
 ## 5. MVP Order
 
@@ -343,9 +366,13 @@ com.vhvkhangg.personallibrarydashboard
   catalog/
   fiction/
   film/
+  journal/
+  profile/
   media/
     album/
+    account/
   fnb/
+    snack/
   information/
   nsfw/
   ideaverse/
@@ -686,6 +713,10 @@ Visual style:
 - Status dropdown in item tables.
 - Avatar preview modal when Avatar is available.
 - Delete confirmation for destructive actions.
+- Header Journal (`Nhật ký`) with read/unread states.
+- Module viewer/player/reader content in a second tab.
+- RAG Workspace with Settings dialog, Chats/Documents rail, central chat, and right inspector.
+- No liquid-glass / `liquid-surface` styling in the accepted UI.
 
 Main list pattern:
 

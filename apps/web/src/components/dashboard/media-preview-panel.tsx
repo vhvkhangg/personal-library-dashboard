@@ -98,7 +98,7 @@ function FullViewModal({ open, onClose, variant, title }: { open: boolean; onClo
   const account = variant === "account";
 
   return (
-    <div className="fixed inset-0 z-[240] flex h-dvh w-dvw items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md" onClick={onClose}>
+    <div className="fixed inset-0 z-[240] flex h-screen w-screen items-center justify-center overflow-hidden bg-slate-950/85 p-4 backdrop-blur-md" onClick={onClose}>
       <div className="max-h-[92vh] w-full max-w-6xl overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card)] shadow-2xl shadow-black/40" onClick={(event) => event.stopPropagation()}>
         <div className="flex items-center justify-between border-b border-[var(--border)] px-6 py-4">
           <h3 className="text-2xl font-semibold">{title}</h3>
@@ -130,7 +130,7 @@ export function MediaPreviewPanel({ variant }: MediaPreviewPanelProps) {
 
   return (
     <>
-      <section className="liquid-surface overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
+      <section className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border)] p-5">
           <div><h2 className="text-lg font-semibold">{meta.title}</h2><p className="mt-1 text-sm text-[var(--muted)]">{meta.description}</p></div>
           <Button variant="outline" size="sm" onClick={() => setFullViewOpen(true)}><Expand className="h-4 w-4" />Open full view</Button>

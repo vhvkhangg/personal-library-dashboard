@@ -25,31 +25,17 @@ Large movie/video files:
 Images/music:
 
 - Google Drive is the preferred future cloud target.
-- Still route through a storage abstraction so providers can change later.
+- Route through a storage abstraction.
 
-## Storage metadata
+## Attachment UI
 
-Store:
+Phase 1 item modals show multi-attachment previews. Future storage model should support multiple attachments per item:
 
-- provider,
-- storage key/path,
-- original filename,
-- MIME type,
-- size bytes,
-- checksum/hash when practical,
-- width/height for image/video,
-- duration for audio/video,
-- created/updated timestamps.
-
-## Path policy
-
-Never hardcode private absolute paths in committed source. Use environment variables:
-
-```txt
-MEDIA_LOCAL_ROOT=D:/PersonalLibrary/media
-OBSIDIAN_VAULT_PATH=C:/Users/VU KHANG/OneDrive/IDEAVERSE
-```
+- preview/cover,
+- source file,
+- reference scan,
+- supplemental metadata file.
 
 ## Album
 
-Album is a Media module entity that can group Image, Picture, and Illustration items. Album does not duplicate binary files; it references existing media items.
+Album references existing media items. It does not duplicate underlying binary files.

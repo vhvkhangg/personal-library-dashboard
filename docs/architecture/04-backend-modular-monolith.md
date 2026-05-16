@@ -2,12 +2,14 @@
 
 ## Status
 
-Phase 1 contains only a backend package map. No business logic should be implemented yet.
+Phase 1 backend is a package-map skeleton only.
+
+No business classes, controllers, entities, repositories, services, or runtime application class should be added in Phase 1 cleanup.
 
 ## Stack target
 
 - Java 25.
-- Spring Boot 4.0.6.
+- Spring Boot 4.
 - Maven.
 - PostgreSQL + pgvector.
 - REST-first API.
@@ -19,12 +21,14 @@ Phase 1 contains only a backend package map. No business logic should be impleme
 com.vhvkhangg.personallibrarydashboard
 ```
 
-## Module package map
+## Package map
 
 ```txt
 common/
 auth/
 dashboard/
+journal/
+profile/
 tags/
 storage/
 catalog/
@@ -41,7 +45,7 @@ export/
 settings/
 ```
 
-Most business modules should eventually use:
+Every business module may later contain:
 
 ```txt
 module/
@@ -51,37 +55,22 @@ module/
   web/
 ```
 
+## UI-to-backend module sync
+
+Current UI additions reflected in backend skeleton:
+
+- `profile/`
+- `journal/`
+- `media/account/`
+- `media/album/`
+- `fnb/snack/`
+
 ## Rules
 
 - Controllers stay thin.
 - Do not expose JPA entities as API responses.
-- Use DTOs for requests/responses.
+- Use DTOs.
 - Cross-module access goes through application services, ports, or events.
-- Do not directly access another module's repository.
+- Do not directly access another module repository.
 - Prefer constructor injection.
-- Do not use field injection.
-- Add database migrations for schema changes.
-- Do not add real implementation classes during Phase 1 final cleanup.
-
-## API response shape
-
-Success:
-
-```json
-{
-  "data": {},
-  "meta": {}
-}
-```
-
-Error:
-
-```json
-{
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "Invalid request.",
-    "details": []
-  }
-}
-```
+- Add migrations for schema changes in implementation phases.

@@ -61,11 +61,11 @@ function AttachmentPreviewModal({ open, onClose }: { open: boolean; onClose: () 
 
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/65 p-4 backdrop-blur-sm" onClick={onClose}>
-      <div className="w-full max-w-lg rounded-3xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-2xl shadow-black/40" onClick={(event) => event.stopPropagation()}>
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-sm font-medium text-[var(--muted)]">Attachment preview</p>
-            <h3 className="mt-1 text-2xl font-semibold">Replace preview or attachment</h3>
+      <div className="w-full max-w-lg rounded-3xl border border-[var(--border)] bg-[var(--card)] p-6 text-left shadow-2xl shadow-black/40" onClick={(event) => event.stopPropagation()}>
+        <div className="flex items-start justify-between gap-4 text-left">
+          <div className="min-w-0 text-left">
+            <p className="text-left text-sm font-medium text-[var(--muted)]">Attachment preview</p>
+            <h3 className="mt-1 text-left text-2xl font-semibold">Replace preview or attachment</h3>
           </div>
           <button type="button" className="focus-ring rounded-xl p-2 text-[var(--muted)] hover:bg-[var(--interactive-hover-bg)] hover:text-[var(--interactive-hover-text)]" onClick={onClose}>
             <X className="h-5 w-5" />
@@ -80,10 +80,10 @@ function AttachmentPreviewModal({ open, onClose }: { open: boolean; onClose: () 
 
         <div className="mt-5 space-y-3">
           {attachments.map(([name, meta]) => (
-            <div key={name} className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3">
-              <div>
-                <p className="text-sm font-semibold">{name}</p>
-                <p className="mt-1 text-xs text-[var(--muted)]">{meta}</p>
+            <div key={name} className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-left">
+              <div className="min-w-0 text-left">
+                <p className="text-left text-sm font-semibold">{name}</p>
+                <p className="mt-1 text-left text-xs text-[var(--muted)]">{meta}</p>
               </div>
               <button type="button" className="focus-ring rounded-xl px-3 py-2 text-xs font-medium text-rose-400 hover:bg-rose-500 hover:text-white">Remove</button>
             </div>

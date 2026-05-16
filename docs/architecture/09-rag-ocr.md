@@ -2,11 +2,30 @@
 
 ## Status
 
-Phase 1 has a UI-only RAG Workspace. Real RAG starts later.
+Phase 1 has a UI-only RAG Workspace.
+
+## Accepted RAG Workspace UI
+
+- Header with title and description.
+- Left rail contains Settings, Chats, Documents.
+- Settings opens a dialog.
+- Documents includes upload progress, status badges, and source selection.
+- Chat header includes Model, Mode, and Search this chat.
+- Composer has send button only; upload is handled in Documents.
+- Answer citation numbers are clickable.
+- Citation click opens source-highlight preview.
+- Right inspector panel contains Citation and Benchmark tabs.
+- Inspector can collapse/expand with icon-only control.
+- Citation cards omit Page/Lines in compact view.
+- Benchmark rows use 4 threshold blocks:
+  - reached safe thresholds are green,
+  - warning threshold is yellow,
+  - bad threshold is red,
+  - unreached thresholds are muted.
 
 ## Service boundary
 
-The Python RAG service owns:
+Python RAG service owns:
 
 - file discovery,
 - parsing,
@@ -22,7 +41,7 @@ The Python RAG service owns:
 - answer generation,
 - citation metadata.
 
-The Spring API owns:
+Spring API owns:
 
 - auth/session state,
 - metadata,
@@ -30,60 +49,8 @@ The Spring API owns:
 - item relations,
 - storage metadata,
 - export orchestration,
-- calling the Python service.
+- calls to the Python service.
 
 ## Offline-first policy
 
 Private documents must not be sent to external AI APIs by default.
-
-## OCR plan
-
-Primary:
-
-- PaddleOCR
-
-Fallback/light baseline:
-
-- Tesseract with Vietnamese language data
-
-Document parsing:
-
-- Docling or equivalent
-
-## Retrieval plan
-
-Retrieval must not stop at vector search.
-
-Use hybrid retrieval:
-
-- sparse search from PostgreSQL full-text/BM25-style candidates,
-- dense search from pgvector,
-- fusion by reciprocal rank fusion or weighted merge,
-- CrossEncoder reranking.
-
-Default reranker candidate:
-
-```txt
-BAAI/bge-reranker-v2-m3
-```
-
-## Local model plan
-
-Candidate answer models:
-
-- Qwen3 8B quantized as the baseline.
-- Qwen3 14B quantized on desktop if performance allows.
-- Vietnamese-focused models such as Vistral variants only after evaluation.
-
-## UI requirements
-
-RAG answers should:
-
-- show inline citation numbers,
-- allow clicking inline citations to open a document-highlight preview,
-- show cited sources in the right inspector,
-- allow chunk/source expansion in the inspector,
-- show compact source score metadata in the inspector,
-- avoid page/line clutter in the compact citation cards unless a later detail view needs it,
-- show benchmark metrics with a four-step green/green/yellow/red progress strip,
-- prefer "không đủ dữ liệu" over hallucination.

@@ -1,6 +1,6 @@
 # personal-library-dashboard Docs
 
-This documentation set is the Phase 1 final version. It replaces the older incremental Phase 1 patch notes and keeps only durable project information.
+This is the final Phase 1 documentation set. It describes the accepted UI, module map, service skeleton, and Phase 2 entry plan.
 
 ## Read order
 
@@ -20,20 +20,16 @@ This documentation set is the Phase 1 final version. It replaces the older incre
 14. `RUNBOOK.md`
 15. `development/phase-1-final.md`
 16. `development/phase-2-plan.md`
-17. `development/local-commands.md`
 
 ## Folder policy
 
 ```txt
 docs/
   README.md
+  RUNBOOK.md
   architecture/     Durable architecture docs.
   decisions/        Consolidated ADRs only.
-  development/      Current phase summaries, local commands, and phase plans.
+  development/      Current phase state, run commands, and phase plans.
 ```
 
-Older files such as `UI_PHASE1_*`, patch-specific notes, and one-off hotfix docs are intentionally consolidated into the current architecture docs and three ADRs.
-
-## Current phase status
-
-Phase 1 UI is still active. Profile, Media Account, F&B Snack, viewer tabs, RAG Workspace, charts, and liquid-glass polish are being adjusted before Phase 2 authentication starts.
+Incremental patch notes have been consolidated. Do not keep one-off UI hotfix docs unless they record a real architecture decision.

@@ -20,7 +20,7 @@ Keep Phase 1 open and implement these UI changes before moving to Phase 2 Authen
 - Put RAG Settings in the left RAG rail with Chats and Uploaded Documents.
 - Move Citation/Benchmark into the main chat workspace as a collapsible inspector panel.
 - Limit dashboard chart rows to two charts per row and make area charts larger with date-aware samples.
-- Apply a liquid-glass surface treatment to shell, cards, tables, and chart surfaces.
+- Tested then removed the liquid-glass surface treatment because it introduced layout/readability issues.
 
 ## Consequences
 

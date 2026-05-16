@@ -1,15 +1,15 @@
 # Architecture Overview
 
-`personal-library-dashboard` is a private, single-user personal dashboard for organizing, viewing, searching, and exporting a personal content library.
+`personal-library-dashboard` is a private, single-user dashboard for organizing, viewing, searching, and exporting a personal content library.
 
 It is also a learning project for:
 
-- Next.js 16 + TypeScript + shadcn/ui-style components.
+- Next.js 16 + shadcn/ui-style frontend.
 - Java 25 + Spring Boot 4 modular monolith backend.
 - Python local RAG/OCR.
 - PostgreSQL + pgvector.
 - Docker Desktop on Windows 11.
-- GPT web as the primary planning/coding assistant and Codex as a secondary local executor/reviewer.
+- GPT web as primary planning/coding assistant and Codex as secondary local executor/reviewer.
 
 ## Runtime shape
 
@@ -25,43 +25,39 @@ Windows 11 desktop host
 
 Laptop access is expected through browser over LAN or private VPN.
 
-## Source-of-truth boundaries
+## Accepted Phase 1 result
 
-- PostgreSQL is the source of truth for application metadata.
-- Local filesystem is the source of truth for large local video/movie files.
-- Google Drive is the preferred future provider for image/music object storage.
-- The external Obsidian vault is the source of truth for Ideaverse Markdown.
-- The web UI is not the source of truth for Ideaverse writing content.
+Phase 1 UI is complete and accepted.
 
-## Phase 1 result
-
-Phase 1 is a UI shell and navigation prototype. It contains no production backend behavior yet.
-
-Accepted UI surfaces:
+Accepted surfaces:
 
 - `/login` login screen.
-- Dashboard shell with icon sidebar + module sidebar + header.
-- Global search/command palette preview.
-- `H` protected-zone PIN modal.
-- Module dashboards and module item tables.
-- Favorites tables.
+- Header with global search, theme toggle, protected `H` PIN modal, and `Nhật ký` journal dialog.
+- Double sidebar layout.
+- Profile top-level module.
+- Module dashboards.
+- Module Overview + Player/Reader/Viewer tabs where applicable.
+- Favorites and Items tables.
 - Tags panel and New Tag modal.
 - Search/filter/date toolbar.
-- Column and export preview popovers.
-- Status dropdown in tables.
-- Avatar preview modal.
-- Item detail and edit modals.
-- Media watch/viewer previews.
-- RAG Workspace three-column prototype.
-- Settings prototype.
+- Column and export previews.
+- Status dropdowns in table rows.
+- Avatar preview.
+- New/Edit item modals with multi-attachment preview.
+- Delete confirmation.
+- RAG Workspace.
+- Settings.
+
+## Deliberately not implemented in Phase 1
+
+- Real authentication.
+- Real database persistence.
+- Real storage providers.
+- Real Obsidian indexing.
+- Real RAG/OCR.
+- Real export engine.
+- Backend business logic.
 
 ## Phase 2 direction
 
-Phase 2 should implement authentication first:
-
-1. single-user login,
-2. JWT access/refresh token flow,
-3. httpOnly cookies,
-4. `/auth/me`,
-5. logout,
-6. NSFW/PIN backend enforcement later.
+Phase 2 starts with Authentication.
