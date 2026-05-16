@@ -11,7 +11,8 @@
 7. NSFW
 8. Ideaverse
 9. RAG/Documents
-10. Settings
+10. Profile
+11. Settings
 
 ## Fiction
 
@@ -45,6 +46,7 @@ Routes:
 
 - `/media`
 - `/media/album`
+- `/media/account`
 - `/media/image`
 - `/media/picture`
 - `/media/illustration`
@@ -55,6 +57,8 @@ Routes:
 
 `Album` is a first-class Media module. Albums can group Image, Picture, and Illustration items into one collection viewer.
 
+`Account` stores followed social accounts/creators and has a viewer-style tab for profile details, links, and platform notes.
+
 `Song` is not a visible module in the accepted navigation. Song-like content belongs under Music.
 
 ## F&B
@@ -63,9 +67,10 @@ Routes:
 
 - `/fnb`
 - `/fnb/food`
+- `/fnb/snack`
 - `/fnb/beverage`
 
-F&B uses its own tag scope. F&B tags should not be conflated with Fiction tags.
+F&B uses its own tag scope. F&B tags should not be conflated with Fiction tags. Snack is separate from Food so quick/light items can be tracked independently.
 
 ## Information
 
@@ -120,6 +125,14 @@ Route:
 - `/documents`
 
 The UI presents chats, uploaded documents, retrieval settings, citations, and benchmark information. Backend/RAG behavior starts in a later phase.
+
+## Profile
+
+Route:
+
+- `/profile`
+
+Profile stores personal workspace information about the single owner. It is a system module shown above Settings.
 
 ## Settings
 

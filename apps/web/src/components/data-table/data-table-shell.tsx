@@ -183,6 +183,12 @@ function createRows(entity: string, typeValue?: string, domainValue?: string): M
       { title: "Kyoto Street Album", description: "Mixed album containing picture, image, and illustration items grouped in one viewer.", type: "Mixed Album", tags: ["Collection", "Gallery"], domain: "Travel Archive", rating: "8.7 / 10", status: "Active", favorite: true },
       { title: "Worldbuilding Board", description: "Reference album that combines mood images, concept illustrations, and scanned pages.", type: "Reference Album", tags: ["Reference", "Moodboard"], domain: "Ideaverse", rating: "8.5 / 10", status: "Draft" },
     ],
+
+    Account: [
+      { title: "Creator Account", description: "Social profile for a creator you follow, with links and platform notes.", type: "Creator", tags: ["YouTube", "Gaming"], domain: "YouTube", rating: "8.8 / 10", status: "Active", favorite: true },
+      { title: "Artist Profile", description: "Illustrator profile with reference links, commission notes, and tracked updates.", type: "Artist", tags: ["Illustration", "Reference"], domain: "Pixiv", rating: "8.2 / 10", status: "Draft" },
+      { title: "Streamer Archive", description: "Streaming account metadata for favorite channels and saved playlists.", type: "Streamer", tags: ["Twitch", "Video"], domain: "Twitch", rating: "7.8 / 10", status: "Archived" },
+    ],
     Music: [
       { title: "Aether Bloom", description: "Atmospheric electronic album for late-night focus sessions and ambient reading.", type: "Album", tags: ["Ambient", "Focus"], domain: "Aurora Lane", rating: "8.8 / 10", status: "Active", favorite: true },
       { title: "Blue Orbit", description: "Instrumental electronic track with a slow build and cinematic texture.", type: "Single", tags: ["Electronic", "Chill"], domain: "Kai Miro", rating: "8.0 / 10", status: "Draft" },
@@ -389,7 +395,7 @@ export function DataTableShell({ title, domainColumn = "Context", domainValue, t
 
   return (
     <>
-      <section className="overflow-visible rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
+      <section className="liquid-surface overflow-visible rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
         <div className="border-b border-[var(--border)] p-5">
           <div className="flex items-center justify-between gap-4">
             <h2 className="text-lg font-semibold">{title}</h2>

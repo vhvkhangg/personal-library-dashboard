@@ -16,9 +16,11 @@ This documentation set is the Phase 1 final version. It replaces the older incre
 10. `architecture/09-rag-ocr.md`
 11. `architecture/10-export.md`
 12. `architecture/11-testing-verification.md`
-13. `development/phase-1-final.md`
-14. `development/phase-2-plan.md`
-15. `development/local-commands.md`
+13. `architecture/12-folder-guide.md`
+14. `RUNBOOK.md`
+15. `development/phase-1-final.md`
+16. `development/phase-2-plan.md`
+17. `development/local-commands.md`
 
 ## Folder policy
 
@@ -34,4 +36,4 @@ Older files such as `UI_PHASE1_*`, patch-specific notes, and one-off hotfix docs
 
 ## Current phase status
 
-Phase 1 UI is accepted. The next implementation phase should be Phase 2 authentication, after this docs/services cleanup is applied and committed.
+Phase 1 UI is still active. Profile, Media Account, F&B Snack, viewer tabs, RAG Workspace, charts, and liquid-glass polish are being adjusted before Phase 2 authentication starts.

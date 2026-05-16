@@ -31,8 +31,9 @@ Primary icons:
 8. Ideaverse
 9. RAG/Documents
 
-System icon:
+System icons:
 
+- Profile
 - Settings
 
 A separator exists between NSFW and Ideaverse, and another before Settings.
@@ -146,16 +147,39 @@ Media modules include UI-only viewer/player previews:
 
 ## RAG Workspace UI
 
-RAG Workspace uses three columns:
+RAG Workspace uses a left rail and a main chat card:
 
 ```txt
-Left: Chats + Uploaded documents
-Center: RAG settings + chat messages + composer
-Right: Citation / Benchmark inspector
+Header: RAG Workspace title + description
+Left rail: Settings/Documents segmented controls, chat list, retrieval settings, document selection
+Main card: model selector, mode selector, chat search, messages, composer
+Right inspector: collapsible Citation/Benchmark rail inside the chat card
 ```
 
 Current behavior is UI-only.
 
+Accepted RAG Workspace details:
+
+- The left rail sits close to the icon sidebar and stays narrower than the chat area.
+- The left rail has `Settings` and `Documents` tabs.
+- Documents no longer uses the `Uploaded documents` label.
+- Documents show upload progress, per-document status badges, and selected-source checkboxes.
+- The chat header contains model selection, mode selection, and chat search.
+- The chat composer has no upload button; document upload belongs in the Documents tab.
+- Question and answer bubbles show timestamps.
+- Inline citation numbers are clickable and open a document-highlight preview dialog.
+- The inspector has icon-only open/close control and no `Show/Hide inspector` text.
+- Citation cards omit page/line text in the compact inspector view.
+- Benchmark cards include a four-segment quality strip: two green segments, one yellow segment, and one red segment.
+
 ## Ideaverse UI
 
 Ideaverse is now read-only in the web app. The web app previews Markdown-like content from an external vault but does not edit the vault.
+
+## Dashboard chart layout
+
+Dashboard chart rows should contain at most two charts. Top Tags should share a row with status breakdown. Column and line charts share one row. Area and donut charts share one row, with the area chart given a larger internal SVG height and date-aware hover labels.
+
+## Liquid-glass surface treatment
+
+Phase 1 uses a dark-first liquid-glass treatment for sidebars, header, cards, tables, charts, and modal surfaces. Use this as a surface treatment only; do not reduce readability or keyboard accessibility.

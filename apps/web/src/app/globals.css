@@ -86,3 +86,35 @@ button:disabled { cursor: not-allowed; }
 .theme-toggle-icon-dark { display: none; }
 .dark .theme-toggle-icon-light { display: none; }
 .dark .theme-toggle-icon-dark { display: inline-flex; }
+
+/* Phase 1 liquid-glass surface treatment. */
+:root {
+  --glass-bg: rgba(15, 23, 42, 0.78);
+  --glass-highlight: rgba(148, 163, 184, 0.12);
+  --glass-shadow: 0 18px 60px rgba(2, 6, 23, 0.28);
+}
+.light {
+  --glass-bg: rgba(255, 255, 255, 0.76);
+  --glass-highlight: rgba(255, 255, 255, 0.7);
+  --glass-shadow: 0 18px 55px rgba(15, 23, 42, 0.10);
+}
+.liquid-surface {
+  position: relative;
+  background:
+    linear-gradient(135deg, var(--glass-highlight), transparent 46%),
+    radial-gradient(circle at top left, rgba(99, 102, 241, 0.13), transparent 22rem),
+    var(--glass-bg);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(18px) saturate(1.18);
+  -webkit-backdrop-filter: blur(18px) saturate(1.18);
+}
+.liquid-surface::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 45%);
+  opacity: 0.45;
+}
+.liquid-surface > * { position: relative; }

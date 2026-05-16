@@ -27,7 +27,7 @@ export function MenuSidebar() {
   const activeClass = "bg-[image:var(--accent-active)] text-white shadow-md shadow-indigo-950/20";
 
   return (
-    <aside className="fixed inset-y-0 left-20 z-30 flex w-56 flex-col border-r border-[var(--border)] bg-[var(--card)] px-4 py-0">
+    <aside className="liquid-surface fixed inset-y-0 left-20 z-30 flex w-56 flex-col border-r border-[var(--border)] bg-[var(--card)]/90 px-4 py-0 backdrop-blur-xl">
       <div className="flex h-16 flex-col justify-center">
         <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">Module</p>
         <h2 className="mt-1 text-lg font-semibold leading-none">{activeNavigation.label}</h2>
@@ -45,7 +45,7 @@ export function MenuSidebar() {
               className={cn(navItemClass, "justify-between", ideaverseGroupActive ? activeClass : inactiveClass)}
               onClick={() => setIdeaverseOpen((current) => !current)}
             >
-              <span className="text-sm">Core</span>
+              <span className="text-sm text-white">Core</span>
               {ideaverseOpen ? <ChevronDown className="h-4 w-4 shrink-0" /> : <ChevronRight className="h-4 w-4 shrink-0" />}
             </button>
 

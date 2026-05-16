@@ -13,7 +13,7 @@ export function MiniBarChart({ title, description, data }: MiniBarChartProps) {
   const maxValue = Math.max(...data.map((item) => item.value), 1);
 
   return (
-    <section className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
+    <section className="liquid-surface rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
       <div>
         <h2 className="text-lg font-semibold">{title}</h2>
         <p className="mt-1 text-sm text-[var(--muted)]">{description}</p>

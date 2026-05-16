@@ -43,7 +43,7 @@ export function IconSidebar() {
   const bottomPrimary = splitIndex >= 0 ? primaryNavigation.slice(splitIndex) : [];
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-40 flex w-20 flex-col items-center border-r border-[var(--border)] bg-[var(--card)] py-4">
+    <aside className="liquid-surface fixed inset-y-0 left-0 z-40 flex w-20 flex-col items-center border-r border-[var(--border)] bg-[var(--card)]/90 py-4 backdrop-blur-xl">
       <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-[18px] bg-[image:linear-gradient(135deg,#2563eb_0%,#7c3aed_100%)] p-[2px] shadow-lg shadow-indigo-950/30" aria-label="Personal Library Dashboard">
         <div className="flex h-full w-full items-center justify-center rounded-[16px] bg-[var(--card)] text-sm font-black tracking-[0.16em] text-[var(--accent)]">VK</div>
       </div>

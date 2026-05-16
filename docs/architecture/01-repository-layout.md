@@ -56,3 +56,7 @@ personal-library-dashboard/
 For Phase 1, `services/api/src/main/java` is a package-map skeleton only. It should contain folders and `package-info.java` files, not controllers, entities, repositories, service implementations, or API logic.
 
 Phase 2 may add real classes under the existing package map.
+
+## Naming rationale
+
+See `architecture/12-folder-guide.md` for why the repo uses `apps/web`, `services/api`, and `services/rag`, and why the current skills set is sufficient for the next phases.

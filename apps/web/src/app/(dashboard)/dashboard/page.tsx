@@ -22,25 +22,27 @@ const itemsByModule = [
 ];
 
 const ratingDistribution = [
-  { label: "0–2", value: 5 },
-  { label: "2–4", value: 18 },
-  { label: "4–6", value: 82 },
-  { label: "6–8", value: 243 },
-  { label: "8–10", value: 476 }
+  { label: "Apr 01", value: 52 },
+  { label: "Apr 08", value: 86 },
+  { label: "Apr 15", value: 122 },
+  { label: "Apr 22", value: 188 },
+  { label: "Apr 29", value: 243 }
 ];
 
 const activityTrend = [
-  { label: "Jan", value: 34 },
-  { label: "Feb", value: 48 },
-  { label: "Mar", value: 57 },
-  { label: "Apr", value: 66 }
+  { label: "Apr 01", value: 34 },
+  { label: "Apr 08", value: 48 },
+  { label: "Apr 15", value: 57 },
+  { label: "Apr 22", value: 66 },
+  { label: "Apr 29", value: 81 }
 ];
 
 const storageTrend = [
-  { label: "W1", value: 92 },
-  { label: "W2", value: 118 },
-  { label: "W3", value: 143 },
-  { label: "W4", value: 166 }
+  { label: "Apr 01", value: 92 },
+  { label: "Apr 08", value: 118 },
+  { label: "Apr 15", value: 143 },
+  { label: "Apr 22", value: 166 },
+  { label: "Apr 29", value: 196 }
 ];
 
 export default function DashboardPage() {
@@ -49,31 +51,27 @@ export default function DashboardPage() {
       <header>
         <p className="text-sm font-medium text-[var(--muted)]">Overview</p>
         <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
-        <p className="mt-2 text-sm text-[var(--muted)]">
-          Dark-first phase-1 overview. Real data will be connected after auth, tags, and storage.
-        </p>
+        <p className="mt-2 text-sm text-[var(--muted)]">Dark-first phase-1 overview. Real data will be connected after auth, tags, and storage.</p>
       </header>
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {cards.map((card) => <SummaryCard key={card.title} {...card} />)}
-      </section>
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">{cards.map((card) => <SummaryCard key={card.title} {...card} />)}</section>
 
-      <section className="grid gap-4 xl:grid-cols-4">
+      <section className="grid gap-4 xl:grid-cols-2">
         <MiniBarChart title="Items by Module" description="Visible items grouped by module." data={itemsByModule} />
-        <DonutChart title="Library Composition" description="Sample donut chart by module." data={itemsByModule.slice(0, 5)} />
-        <ColumnChart title="Rating Distribution" description="Items grouped by rating range." data={ratingDistribution} />
-        <LineChart title="Monthly Activity" description="Sample update activity across the library." data={activityTrend} />
-      </section>
-
-      <section className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
-        <AreaChart title="Storage Growth" description="Sample area chart for tracked storage." data={storageTrend} />
         <TopTags />
       </section>
 
-      <section className="grid gap-4 xl:grid-cols-[1.25fr_1fr]">
-        <RecentUpdates />
-        <StorageOverview />
+      <section className="grid gap-4 xl:grid-cols-2">
+        <ColumnChart title="Rating Distribution" description="Items grouped by date-aware rating samples." data={ratingDistribution} />
+        <LineChart title="Monthly Activity" description="Hover points to inspect each sample date." data={activityTrend} />
       </section>
+
+      <section className="grid gap-4 xl:grid-cols-2">
+        <AreaChart title="Storage Growth" description="Larger area chart for tracked storage by date." data={storageTrend} />
+        <DonutChart title="Library Composition" description="Sample donut chart by module." data={itemsByModule.slice(0, 5)} />
+      </section>
+
+      <section className="grid gap-4 xl:grid-cols-[1.25fr_1fr]"><RecentUpdates /><StorageOverview /></section>
     </div>
   );
 }

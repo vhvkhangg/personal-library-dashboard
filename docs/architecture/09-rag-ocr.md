@@ -80,8 +80,10 @@ Candidate answer models:
 RAG answers should:
 
 - show inline citation numbers,
-- show cited sources,
-- allow chunk expansion,
-- show page/line/score metadata,
-- show benchmark metrics,
+- allow clicking inline citations to open a document-highlight preview,
+- show cited sources in the right inspector,
+- allow chunk/source expansion in the inspector,
+- show compact source score metadata in the inspector,
+- avoid page/line clutter in the compact citation cards unless a later detail view needs it,
+- show benchmark metrics with a four-step green/green/yellow/red progress strip,
 - prefer "không đủ dữ liệu" over hallucination.

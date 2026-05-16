@@ -2,7 +2,7 @@
 
 ## Accepted
 
-Phase 1 UI is accepted by the project owner.
+Phase 1 UI is not final yet. The previous accepted state was reopened for Profile, Media Account, Snack, viewer tabs, RAG Workspace, dashboard chart layout, and liquid-glass polish.
 
 ## Final UI scope
 

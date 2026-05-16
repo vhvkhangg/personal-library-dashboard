@@ -16,3 +16,6 @@ common/security/
 common/error/
 common/web/
 ```
+
+
+Current package-map additions include Profile, Media Account, and F&B Snack so the backend skeleton stays aligned with the UI navigation.

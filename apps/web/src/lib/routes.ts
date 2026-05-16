@@ -8,6 +8,7 @@ import {
   Lock,
   NotebookTabs,
   Settings,
+  UserRound,
   Sparkles,
   Utensils,
 } from "lucide-react";
@@ -22,6 +23,7 @@ export type NavigationKey =
   | "nsfw"
   | "ideaverse"
   | "documents"
+  | "profile"
   | "settings";
 
 export type NavigationItem = {
@@ -54,6 +56,7 @@ export const primaryNavigation: NavigationItem[] = [
 ];
 
 export const systemNavigation: NavigationItem[] = [
+  { key: "profile", label: "Profile", href: "/profile", icon: UserRound },
   { key: "settings", label: "Settings", href: "/settings", icon: Settings },
 ];
 
@@ -92,6 +95,7 @@ export const moduleMenus: Partial<Record<NavigationKey, MenuSection[]>> = {
       items: [
         { label: "Dashboard", href: "/media" },
         { label: "Album", href: "/media/album" },
+        { label: "Account", href: "/media/account" },
         { label: "Image", href: "/media/image" },
         { label: "Picture", href: "/media/picture" },
         { label: "Illustration", href: "/media/illustration" },
@@ -108,6 +112,7 @@ export const moduleMenus: Partial<Record<NavigationKey, MenuSection[]>> = {
       items: [
         { label: "Dashboard", href: "/fnb" },
         { label: "Food", href: "/fnb/food" },
+        { label: "Snack", href: "/fnb/snack" },
         { label: "Beverage", href: "/fnb/beverage" },
       ],
     },
