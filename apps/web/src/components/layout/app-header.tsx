@@ -1,9 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { ArrowRight, BookOpen, CheckCheck, FileText, History, PackageCheck, Search, Settings, Sparkles, UserRound, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowRight, BookOpen, CheckCheck, FileText, History, LogOut, PackageCheck, Search, Settings, Sparkles, UserRound, X } from "lucide-react";
 import { NsfwToggle } from "@/components/layout/nsfw-toggle";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { useAuth } from "@/components/providers/auth-provider";
 import { cn } from "@/lib/utils";
 
 const commandGroups = [
@@ -201,8 +203,11 @@ function JournalDialog({ open, onClose }: { open: boolean; onClose: () => void }
 }
 
 export function AppHeader() {
+  const router = useRouter();
+  const { logout, user } = useAuth();
   const [commandOpen, setCommandOpen] = React.useState(false);
   const [journalOpen, setJournalOpen] = React.useState(false);
+  const [logoutPending, setLogoutPending] = React.useState(false);
 
   React.useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -215,6 +220,17 @@ export function AppHeader() {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  async function handleLogout() {
+    setLogoutPending(true);
+    try {
+      await logout();
+      router.replace("/login");
+      router.refresh();
+    } finally {
+      setLogoutPending(false);
+    }
+  }
+
   return (
     <>
       <header className="sticky top-0 z-20 border-b border-[var(--border)] bg-[var(--card)]/95 backdrop-blur">
@@ -225,12 +241,26 @@ export function AppHeader() {
             <kbd className="ml-auto rounded-md border border-[var(--border)] bg-[var(--surface-subtle)] px-2 py-0.5 text-xs text-[var(--muted)]">Ctrl + K</kbd>
           </button>
           <div className="ml-auto flex items-center gap-2">
+            <div className="hidden items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--muted)] lg:flex">
+              <UserRound className="h-4 w-4 text-[var(--accent)]" />
+              <span className="max-w-40 truncate">{user?.displayName ?? user?.username ?? "Owner"}</span>
+            </div>
             <button type="button" className={cn("focus-ring relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] text-[var(--muted)] transition hover:bg-[var(--interactive-hover-bg)] hover:text-[var(--interactive-hover-text)]", journalOpen && "bg-[var(--interactive-hover-bg)] text-[var(--interactive-hover-text)]")} aria-label="Open activity journal" title="Nhật ký" onClick={() => setJournalOpen((current) => !current)}>
               <History className="h-4 w-4" />
               <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-rose-400" />
             </button>
             <ThemeToggle />
             <NsfwToggle />
+            <button
+              type="button"
+              className="focus-ring inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] text-[var(--muted)] transition hover:border-rose-400 hover:bg-rose-500 hover:text-white disabled:pointer-events-none disabled:opacity-60"
+              aria-label="Logout"
+              title="Logout"
+              onClick={handleLogout}
+              disabled={logoutPending}
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
           </div>
         </div>
       </header>

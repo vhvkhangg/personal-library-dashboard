@@ -18,11 +18,11 @@ Phase 1 UI is accepted as final.
 
 Current sync:
 
-- docs refreshed,
-- services skeleton refreshed,
-- root README/AGENTS refreshed,
-- skills refreshed,
-- Phase 2 starts with Authentication next.
+- Phase 2.1 Auth contract is complete,
+- Phase 2.2 backend Auth minimum is complete,
+- Phase 2.3 frontend Auth wiring is complete,
+- Phase 2.4 verification/docs cleanup records checks, runbook commands, and commit notes.
+
 
 ## Target Runtime
 
@@ -94,6 +94,7 @@ Start here:
 - [Data Model](docs/architecture/05-data-model.md)
 - [Storage Architecture](docs/architecture/06-storage.md)
 - [Security/Auth](docs/architecture/07-auth-security.md)
+- [Auth Contract](docs/architecture/13-auth-contract.md)
 - [Ideaverse and Obsidian](docs/architecture/08-ideaverse-obsidian.md)
 - [Local RAG/OCR](docs/architecture/09-rag-ocr.md)
 - [Export](docs/architecture/10-export.md)
@@ -105,7 +106,7 @@ Start here:
 ## Phase Roadmap
 
 1. Layout shell and final UI — accepted in Phase 1
-2. Auth — next Phase 2 target
+2. Auth — Phase 2.4 verification/docs cleanup now
 3. Tag system
 4. Image and album viewer
 5. Fiction module
@@ -120,5 +121,72 @@ Start here:
 - Frontend package manager: `pnpm`
 - Backend build tool: `Maven`
 - Python tooling: `uv`
-- Database migration tool: to be finalized during backend setup
+- Database migration tool: Flyway
 - Runtime: Docker Desktop + Docker Compose
+
+
+## Phase 2 Auth
+
+Current accepted auth decisions:
+
+- seed the single user from environment variables,
+- login uses one `identifier` field for username/email/phone,
+- cookies are `pld_access_token` and `pld_refresh_token`,
+- refresh tokens are stored as hashes only,
+- access token TTL is 15 minutes,
+- refresh token TTL is 14 days,
+- Flyway is the migration tool for auth schema in Phase 2.2.
+
+
+## Phase 2.2 Backend Auth Minimum
+
+Phase 2.2 adds the runnable Spring Boot Auth backend:
+
+- Flyway migration for `auth_users` and `auth_refresh_tokens`,
+- seed user bootstrap from environment/config,
+- BCrypt password hashing,
+- JWT access token cookie,
+- opaque refresh token cookie,
+- refresh-token hash persistence,
+- login/refresh/logout/me endpoints.
+
+Run:
+
+```powershell
+mvn -f services\api\pom.xml test
+mvn -f services\api\pom.xml spring-boot:run
+```
+## Phase 2.3 Frontend Auth Wiring
+
+Phase 2.3 connects the accepted login UI to the Spring Boot Auth API:
+
+- `/login` submits to `POST /auth/login`,
+- `AuthProvider` restores sessions with `GET /auth/me`,
+- expired access cookies fall back to `POST /auth/refresh`,
+- dashboard routes are guarded client-side,
+- the header shows the current user and exposes logout,
+- tokens remain httpOnly cookies and are never stored in localStorage.
+
+Frontend API base URL defaults to `http://localhost:8080` and can be overridden with:
+
+```txt
+NEXT_PUBLIC_PLD_API_BASE_URL=http://localhost:8080
+```
+
+
+## Phase 2.4 Verification
+
+Phase 2.4 records verification status and local commands for the Auth slice.
+
+Run locally from repository root:
+
+```powershell
+pnpm --filter @pld/web typecheck
+pnpm --filter @pld/web lint
+mvn -f services\api\pom.xml test
+```
+
+See:
+
+- `docs/development/phase-2-4-verification-report.md`
+- `docs/development/commit-notes/phase-2-auth.md`

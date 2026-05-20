@@ -74,3 +74,24 @@ Current UI additions reflected in backend skeleton:
 - Do not directly access another module repository.
 - Prefer constructor injection.
 - Add migrations for schema changes in implementation phases.
+
+
+## Phase 2.1 auth contracts
+
+Phase 2.1 is the first exception to the Phase 1 package-info-only rule. It adds small Java contract records and interfaces for Auth so Phase 2.2 can implement against stable boundaries.
+
+Allowed in Phase 2.1:
+
+- DTO records under `auth/web`,
+- application records/interfaces under `auth/application`,
+- domain records under `auth/domain`,
+- repository contract interfaces under `auth/infrastructure`,
+- common web/security contract classes.
+
+Not allowed until Phase 2.2:
+
+- controller implementation,
+- Spring Security filter chain,
+- JPA entities/repositories,
+- Flyway SQL migrations,
+- password hashing implementation.

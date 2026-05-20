@@ -7,8 +7,10 @@
 Current phase status:
 
 - Phase 1 UI is accepted as final.
-- Current sync task updates docs, services skeleton, skills, AGENTS.md, and README.md to match the final UI.
-- Phase 2 should start with Authentication after this sync is committed.
+- Phase 2.1 Auth docs + contract + package skeleton is complete.
+- Phase 2.2 implements backend Auth minimum: runnable Spring Boot API, Flyway auth schema, password hashing, JWT access cookies, refresh-token hash storage, login/refresh/logout/me endpoints.
+- Phase 2.3 wires the frontend login/session flow: `/login` calls the real Auth API, an AuthProvider restores sessions, dashboard routes are guarded, and logout is available in the header.
+- Phase 2.4 records verification status, runbook commands, docs cleanup, and commit notes for the completed Auth slice.
 
 The project is also a learning project for:
 
@@ -53,7 +55,7 @@ Use these defaults unless the user explicitly changes them.
 - Base package: `com.vhvkhangg.personallibrarydashboard`.
 - Architecture: Modular Monolith.
 - API style: REST-first.
-- Auth: single-user JWT learning implementation.
+- Auth: single-user JWT learning implementation. Phase 2.2 backend minimum uses an environment-seeded user, `identifier` login, BCrypt password hashing, httpOnly cookies, refresh-token hash storage, 15-minute access token TTL, and 14-day refresh token TTL.
 - Validation: Bean Validation on request DTOs.
 - Database migrations: required for every schema change.
 
@@ -285,11 +287,24 @@ Implement in this order unless the user changes priorities:
    - Double sidebar: icon sidebar + menu sidebar.
    - Main dashboard/table/list shell.
 2. Authentication:
+   - Phase 2.1: docs, API contract, DTO records, application/domain contracts, config placeholders.
+   - Phase 2.2: backend Auth minimum with runnable Spring Boot API.
+   - Phase 2.3: frontend Auth wiring with login form submission, session provider, route guard, logout, loading state, and access-token refresh fallback.
+   - Phase 2.4: verification/docs cleanup, runbook updates, and commit note.
    - Single-user login.
+   - Login identifier accepts username, email, or phone.
    - JWT access token + refresh token.
    - httpOnly cookie strategy.
+   - Cookie names: `pld_access_token`, `pld_refresh_token`.
+   - Store refresh token hash only.
+   - Access token TTL: 15 minutes.
+   - Refresh token TTL: 14 days.
    - Logout.
    - `/auth/me`.
+   - Flyway migration for auth tables.
+   - BCrypt password hashing.
+   - Spring Security stateless filter chain.
+   - Frontend AuthProvider restores `/auth/me`, falls back to `/auth/refresh`, and never reads httpOnly tokens.
 3. Tag system:
    - Global tags.
    - Scoped/category tags.
@@ -662,11 +677,13 @@ The app is single-user, but auth is still required.
 
 Use JWT for learning:
 
-- access token
-- refresh token
+- access token TTL: 15 minutes
+- refresh token TTL: 14 days
 - refresh token rotation if practical
 - httpOnly cookie storage
+- cookie names: `pld_access_token`, `pld_refresh_token`
 - no localStorage token storage
+- refresh token persisted as a hash only
 - logout invalidates refresh token
 
 Endpoints:

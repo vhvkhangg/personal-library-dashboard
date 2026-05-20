@@ -2,5 +2,41 @@ spring:
   application:
     name: personal-library-dashboard-api
 
+  datasource:
+    url: ${PLD_DATABASE_URL:jdbc:postgresql://localhost:5432/personal_library_dashboard}
+    username: ${PLD_DATABASE_USERNAME:pld}
+    password: ${PLD_DATABASE_PASSWORD:pld}
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      "[hibernate.format_sql]": true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
 server:
   port: 8080
+
+app:
+  auth:
+    seed:
+      username: ${PLD_AUTH_SEED_USERNAME:owner}
+      email: ${PLD_AUTH_SEED_EMAIL:owner@example.local}
+      phone: ${PLD_AUTH_SEED_PHONE:}
+      display-name: ${PLD_AUTH_SEED_DISPLAY_NAME:Vinh Khang}
+      password: ${PLD_AUTH_SEED_PASSWORD:change-me-local-dev}
+    jwt:
+      issuer: personal-library-dashboard
+      access-token-ttl: 15m
+      refresh-token-ttl: 14d
+      secret: ${PLD_AUTH_JWT_SECRET:local-development-jwt-secret-change-me-please-32bytes-min}
+    cookies:
+      access-token-name: pld_access_token
+      refresh-token-name: pld_refresh_token
+      secure: false
+      same-site: Strict
+      path: /

@@ -1,0 +1,122 @@
+{
+  "groups": [
+    {
+      "name": "app.auth",
+      "type": "com.vhvkhangg.personallibrarydashboard.auth.AuthProperties",
+      "description": "Personal Library Dashboard authentication settings."
+    },
+    {
+      "name": "app.auth.seed",
+      "type": "com.vhvkhangg.personallibrarydashboard.auth.AuthProperties$Seed",
+      "description": "Initial single-user bootstrap settings loaded from environment variables."
+    },
+    {
+      "name": "app.auth.jwt",
+      "type": "com.vhvkhangg.personallibrarydashboard.auth.AuthProperties$Jwt",
+      "description": "JWT issuer, token TTL, and secret settings."
+    },
+    {
+      "name": "app.auth.cookies",
+      "type": "com.vhvkhangg.personallibrarydashboard.auth.AuthProperties$Cookies",
+      "description": "Browser cookie names and attributes for auth tokens."
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.auth.seed.username",
+      "type": "java.lang.String",
+      "description": "Initial local user's username."
+    },
+    {
+      "name": "app.auth.seed.email",
+      "type": "java.lang.String",
+      "description": "Initial local user's email."
+    },
+    {
+      "name": "app.auth.seed.phone",
+      "type": "java.lang.String",
+      "description": "Initial local user's phone number."
+    },
+    {
+      "name": "app.auth.seed.display-name",
+      "type": "java.lang.String",
+      "description": "Initial local user's display name.",
+      "defaultValue": "Vinh Khang"
+    },
+    {
+      "name": "app.auth.seed.password",
+      "type": "java.lang.String",
+      "description": "Initial local user's raw bootstrap password. Never commit a value."
+    },
+    {
+      "name": "app.auth.jwt.issuer",
+      "type": "java.lang.String",
+      "description": "JWT issuer.",
+      "defaultValue": "personal-library-dashboard"
+    },
+    {
+      "name": "app.auth.jwt.access-token-ttl",
+      "type": "java.time.Duration",
+      "description": "Access token TTL.",
+      "defaultValue": "15m"
+    },
+    {
+      "name": "app.auth.jwt.refresh-token-ttl",
+      "type": "java.time.Duration",
+      "description": "Refresh token TTL.",
+      "defaultValue": "14d"
+    },
+    {
+      "name": "app.auth.jwt.secret",
+      "type": "java.lang.String",
+      "description": "JWT signing secret loaded from environment variables."
+    },
+    {
+      "name": "app.auth.cookies.access-token-name",
+      "type": "java.lang.String",
+      "description": "Access token cookie name.",
+      "defaultValue": "pld_access_token"
+    },
+    {
+      "name": "app.auth.cookies.refresh-token-name",
+      "type": "java.lang.String",
+      "description": "Refresh token cookie name.",
+      "defaultValue": "pld_refresh_token"
+    },
+    {
+      "name": "app.auth.cookies.secure",
+      "type": "java.lang.Boolean",
+      "description": "Whether auth cookies require HTTPS.",
+      "defaultValue": false
+    },
+    {
+      "name": "app.auth.cookies.same-site",
+      "type": "java.lang.String",
+      "description": "SameSite attribute for auth cookies.",
+      "defaultValue": "Strict"
+    },
+    {
+      "name": "app.auth.cookies.path",
+      "type": "java.lang.String",
+      "description": "Path attribute for auth cookies.",
+      "defaultValue": "/"
+    },
+    {
+      "name": "spring.datasource.url",
+      "type": "java.lang.String",
+      "description": "JDBC URL for PostgreSQL.",
+      "defaultValue": "jdbc:postgresql://localhost:5432/personal_library_dashboard"
+    },
+    {
+      "name": "spring.datasource.username",
+      "type": "java.lang.String",
+      "description": "Database username.",
+      "defaultValue": "pld"
+    },
+    {
+      "name": "spring.datasource.password",
+      "type": "java.lang.String",
+      "description": "Database password."
+    }
+  ]
+}

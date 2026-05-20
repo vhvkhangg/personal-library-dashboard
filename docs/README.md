@@ -33,3 +33,6 @@ docs/
 ```
 
 Incremental patch notes have been consolidated. Do not keep one-off UI hotfix docs unless they record a real architecture decision.
+
+- [Phase 2.4 Verification Report](development/phase-2-4-verification-report.md)
+- [Phase 2 Auth Commit Note](development/commit-notes/phase-2-auth.md)
